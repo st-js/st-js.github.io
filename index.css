@@ -167,7 +167,7 @@ body {
 	color: #10C500;
 }
 
-h4 {
+h4 {what you canno
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #10C500;
@@ -182,6 +182,11 @@ h5 {
 
 ol.tutorial {
 	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+ul.team {
+	list-style-type: circle;
 	list-style-position: inside;
 }
 
