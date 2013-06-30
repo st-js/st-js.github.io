@@ -12,8 +12,8 @@
   /* punctuation, lisp open bracket, lisp close bracket */
   .pun, .opn, .clo { color: #69BE6C }
   .tag { color: #2EAC24 }  /* a markup tag name */
-  .atn { color: #606 }  /* a markup attribute name */
-  .atv { color: #080 }  /* a markup attribute value */
+  .atn { color: #5050A2 }  /* a markup attribute name */
+  .atv { color: #C4C42F }  /* a markup attribute value */
   .dec, .var { color: #606 }  /* a declaration; a variable name */
   .fun { color: red }  /* a function name */
 }
