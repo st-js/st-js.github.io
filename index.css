@@ -1,0 +1,181 @@
+
+body {
+	background-color: #FAFAFA;
+	font-family: Ubuntu, sans-serif;
+	font-size: 14px;
+}
+
+.topHighlight h1 {
+	font-size: 2.5em;
+	font-weight: bold;
+	color: #10C500;
+	padding-top: 25px;
+}
+
+.topHighlight h1 a,
+.topHighlight h1 a:visited,
+.topHighlight h1 a:hover {
+	text-decoration: none;
+	color: #10C500;
+}
+
+.topHighlight h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #FAFAFA;
+	padding-top: 12px;
+	padding-bottom: 20px;
+}
+
+.topHighlight {
+	background-color: #383838;
+	color: #FAFAFA;
+	border-bottom: 10px solid #BBBBBB;
+}
+
+.topHighlight .intro {
+	padding-top: 12px;
+}
+
+.topHighlight .menu {
+	text-align: right;
+	padding-top: 25px;
+}
+
+.topHighlight .menu li {
+	padding-top: 10px;
+}
+
+.topHighlight .menu a,
+.topHighlight .menu a:visited,
+.topHighlight .menu a:hover {
+	text-decoration: none;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #FAFAFA;
+}
+
+.content {
+	margin-top: 10px;
+}
+
+.content .menu {
+	text-align: left;
+	padding: 5px 5px 15px 5px;
+	background-color: #383838;
+	border-radius: 5px;
+}
+
+.content .menu li {
+	padding-top: 10px;
+}
+
+.content .menu a,
+.content .menu a:visited,
+.content .menu a:hover {
+	text-decoration: none;
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #FAFAFA;
+}
+
+.content .submenu li {
+	padding: 0px 0px 0px 15px;
+	margin: 0px;
+}
+
+.content .submenu a,
+.content .submenu a:visited,
+.content .submenu a:hover {
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: normal;
+	color: #FAFAFA;
+}
+
+.content h3 {
+	font-size: 1.5em;
+	color: #10C500;
+	padding: 10px 0px 3px 0px;
+	border-bottom: 3px solid #383838;
+	margin-bottom: 20px;
+}
+
+.content a {
+	color: #10C500;
+}
+
+.content p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.code {
+	font-family: Ubuntu Mono;
+	color: #BABABA;
+	background-color: #202020;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	padding: 10px;
+	padding-top: 15px;
+	margin-top: 8px;
+}
+
+.topHighlight .code {	
+	margin-top: 20px;
+}
+
+.code .variable {
+	color: #2EAC24;
+}
+
+.code .litteral {
+	color: #C4C42F;
+}
+
+.code .function {
+	color: #2BA0A0;
+}
+
+.code .type {
+	color: #5050A2;
+}
+/*
+.code .keyword {
+	color: #DA9A9A;
+}
+*/
+.code .title {
+	font-weight: bold;
+}
+
+.messageItem {
+	width: 200px;
+	color: #202020;
+}
+
+.messageItem h3 {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.messagesHeader {
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	margin: 12px 0px 20px 0px;
+	color: #10C500;
+}
+
+h4 {
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #10C500;
+	margin-top: 20px;
+}
+
+h5 {
+	font-weight: bold;
+	color: #10C500;
+	margin-top: 20px;
+}
