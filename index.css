@@ -179,3 +179,16 @@ h5 {
 	color: #10C500;
 	margin-top: 20px;
 }
+
+ol.tutorial {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+ol.tutorial li {
+	margin-top: 25px;
+}
+
+ol.tutorial .code {
+	margin-left: 25px;
+}

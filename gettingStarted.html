@@ -417,11 +417,9 @@ stjs.extend(Child, Parent, [],
 		JavaScript arrays are much richer than Java arrays, and provide a set of useful methods such as push, slice, etc...
 		On top of that, the for-in iteration in Java array is done on values (<i>for(String s : array)</i>) while the iteration in JavaScript is done on indexes (<i>for(var idx : array)</i>). ST-JS provides the <strong>org.stjs.javascript.Array</strong> class to reproduced the JavaScript array behavior.</p>
 		
-		
-		the Even though JavaScript looks to be more flexible than Java, there are things that you can do in Java but you cannot do (at least directly) in JavaScript.
-		Of course, during the JavaScript generation, we could've add some JavaScript constructions to go around these limitations. But again our philosophy is to alter
-		as little as possible the Java code during the transformation. That's why we prefer to generate errors and to ask the user to find a compatible alternative.
-		So here is the list (that keeps growing - unfortunately):
+		<p>While some of these limitations could be worked around by making STJS a little bit more complex, it would result in the JavaScript code diverging too far from the
+		original Java source. Removing these limitations would need going against to the philosophy of ST-JS: the generated JavaScript code is immediately recognizable when 
+		compared with your Java source code. That's why we prefer to produce transpilation-time errors and to ask the user to find a suitable alternative.</p>
 		</p>
 	</div>
 
