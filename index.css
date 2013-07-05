@@ -180,13 +180,17 @@ h5 {
 	margin-top: 20px;
 }
 
-ol.tutorial {
-	list-style-type: decimal;
-	list-style-position: inside;
+.grid_10 ul{
+	list-style-type: circle;
+	list-style-position: outside;
+	margin-left: 25px;
+}
+.grid_10 ul li {
+	margin-top: 5px;
 }
 
-ul.team {
-	list-style-type: circle;
+ol.tutorial {
+	list-style-type: decimal;
 	list-style-position: inside;
 }
 
