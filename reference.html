@@ -51,9 +51,9 @@
 				<li><a href="reference.html">Reference</a>
 					<ul class="submenu">
 						<li><a href="">Writing ST-JS code</a></li>
-						<li><a href="jslib.html">JavaScript bridge</a></li>
-						<li><a href="jslib.html">DOM bridge</a></li>
-						<li><a href="bridges.html">Library bridges</a></li>
+						<li><a href="">Controlling JS output</a></li>
+						<li><a href="jslib.html">JS/DOM bridges</a></li>
+						<li><a href="bridges.html">JS Library bridges</a></li>
 						<li><a href="">Generator</a></li>
 						<li><a href="maven.html">Maven plugin</a></li>
 						<li><a href="eclipse.html">Eclipse integration</a></li>
@@ -66,11 +66,100 @@
 
 		<div class="grid_10">
 			<h3>Writing ST-JS code</h3>
-			<p>
-				For an quick overview of the basics of writing ST-JS code, check out
-				our <a href="faq.html#whatDoesItLookLike">"What does it look
-					like?"</a> section. For more detailed information, keep reading.
-			<h4>Controlling the JavaScript output</h4>
+			<p>Please start by reading our <a href="faq.html#whatDoesItLookLike">What does it look
+				like?</a> section. It contains most of the information you need to write usual ST-JS
+				code. On top of that, our <a href="tutorial.html">tutorial</a> will guide you through 
+				all the steps necessary to create and run your first ST-JS project with Maven.</p>
+			<p>If you need to use more advanced features of ST-JS, or haven't found out how 
+				a particular JavaScript construct can be expressed in Java, then keep on reading.</p>
+
+
+			<h4>Special fields and methods</h4>
+			<p>Most of the Java code you write will be translated basically
+				as-is to its JavaScript counterpart. However, there are some
+				JavaScript constructs that cannot be written as-is in Java. For
+				these cases, ST-JS provides workarounds as special fields and
+				methods.</p>
+			<p>All of those special fields and methods are easy to identify:
+				there name always starts with the dollar sign ($). When you use
+				these methods you should expect the generated JavaScript code to
+				look slighty different (it is usually prettier, actually) than the
+				corresponding Java construct.</p>
+			<p>Here is the list of these constructs and methods:
+			
+			<h5>Collection initialization (org.stjs.javascript.JSCollections)</h5>
+			<pre class="code prettyprint">
+// JavaScript             // Java equivalent
+
+// Create a map with the given keys and values
+{k1:v1, k2:v2}            $map(k1,v1,k2,v2)
+
+// Create an array with the given items
+[a, b, c]                 $array(a, b, c)
+
+// Convert a java array to the org.stjs.javascript.Array type
+var a=b                   Array&lt;T&gt; a = $castArray(T[]b)
+			</pre>
+			
+			<h5>Associative array, maps, etc... (org.stjs.javascript.Map)</h5>
+			<pre class="code prettyprint">
+// JavaScript             // Java equivalent
+
+// Put a key and a value in a map
+x[a] = b                  x.$put(a, b)
+
+// Retrieve a value from a map
+x[a]                      x.$get(a)
+
+// Delete an entry from a map
+delete x[a]               x.$delete(a)
+			</pre>
+
+			<h5>Arrays (org.stjs.javascript.Array)</h5>
+			<pre class="code prettyprint">
+// JavaScript             // Java equivalent
+
+// Retrieve an item from an array
+x[a]                      x.$get(a)
+
+// Modify an item in an array
+x[index] = val            x.$set(index, val)
+			</pre>
+
+			<h5>Working with object properties (org.stjs.javascript.JsObjectAdapter)</h5>
+			<pre class="code prettyprint">
+// JavaScript             // Java equivalent
+
+// expose all the properties of an object as a map
+propsMap = obj            propsMap = $properties(obj)
+
+// get the value of a property of an object by name
+obj["prop"]               $properties(obj).$get("prop")
+
+// convert a map as an object of a given type with the same properties
+var obj = map             T obj = $object(map)
+
+// Return the prototype of a JavaScript objects
+obj.prototype             $prototype(obj)
+
+// Return the constructor of a JavaScript object
+obj.constructor           $constructor(obj)
+
+// Replaces with the given javascriptCode (only String literals accepted). 
+// Use it only in extreme cases as it makes it impossible to minimize the code.
+javascriptCode            $js(javascriptCode)
+			</pre>
+
+			<h5>Other Javascript operations (org.stjs.javascript.Global)</h5>
+			<pre class="code prettyprint">
+// JavaScript             // Java equivalent
+
+// Return first value the is equivalent to true in JavaScript
+a || b || c               $or(a,b,c)
+			</pre>
+
+
+			<h3>Controlling the JavaScript output</h3>
 			<p>In most cases, there is no need to change the way the
 				JavaScript is generated. There are however come cases where this is
 				useful</p>
@@ -79,7 +168,7 @@
 				annotations in your Java code.</p>
 				
 				
-			<h5>@Namespace</h5>
+			<h4>@Namespace</h4>
 			<p>The annotated Class, or all the classes in the annotated package
 				will be placed in the specified namespace. This is useful to avoid
 				name clashes with classes coming from other libraries.</p>
@@ -93,7 +182,6 @@ public class Bottle {
         doSomething();
     }
 }
-
 
 // Java without @Namespace
 public class Plain {
@@ -113,8 +201,8 @@ genie.in.a.Bottle = function() {
 }
 
 
-
 // JavaScript without @Namespace
+
 Plain = function() {
     doNothing();
 }
@@ -124,7 +212,7 @@ Plain = function() {
 			
 
 
-			<h5>@JavascriptFunction</h5>
+			<h4>@JavascriptFunction</h4>
 			<p>All the anonymous implementations of the annotated single-method Java interface 
 			will be generated as a JavaScript anonymous function. All invocations of the method
 			contained in the annotated interface will be generated as a direct call to that function.
@@ -178,9 +266,10 @@ Something = function(event){
 			</div>
 			<div class="clear"></div>
 			
-			<h5>@GlobalScope</h5>
+			<h4>@GlobalScope</h4>
 			<p>The static fields and methods in the annotated type are considered
-				part of the global scope during JavaScript generation. When a type is 
+				already being part of the global scope at runtime, typically provided by 
+				an existing imported JavaScript library. When a type is 
 				annotated with @GlobalScope, no corresponding JavaScript is generated.
 			</p>
 			<p>This annotation is useful when writing bridges for an existing JavaScript 
@@ -227,6 +316,7 @@ public class Something {
 
 
 
+
 // JavaScript (usage)
 
 
@@ -239,13 +329,12 @@ Something = new function(){
 			<div class="clear"></div>
 
 
-			<h5>@SyntheticType</h5>
-			<p>The annotated class is marked as a data object. Objects marked with 
+			<h4>@SyntheticType</h4>
+			<p>The annotated class is marked as a data-only object. Objects marked with 
 				this annotation can only contain non-private fields and cannot 
 				contain any methods. Instance of a class marked with this annotation
 				can be initialized using the double-brace syntax in your java source
-				code, and will be translated to a Javascript Object Literal. No
-				JavaScript code is generated for classes marked with this annotation.
+				code, and will be translated to a Javascript Object Literal.
 			</p>
 			<p>This annotation is typically used by bridges to provide a correctly typed 
 				equivalent of a parameter that the javscript library expects to be an 
@@ -256,6 +345,7 @@ Something = new function(){
 // Java (declaration)
 @SyntheticType
 public class AjaxParams {
+
     // some fields are omitted for brevity
     public boolean async;
     public String url;
@@ -278,11 +368,12 @@ public class Something {
 <pre class="code prettyprint language-javascript">
 // JavaScript (declaration)
 
-
-// nothing is generated
-
-
-
+var AjaxParams = function(){};
+stjs.extend(AjaxParams, null, [], 
+        function(constructor, prototype){
+    prototype.async = null;
+    prototype.url = null;
+}, {});
 
 // JavaScript (usage)
 
@@ -298,24 +389,81 @@ Something = function(){
 			</div>
 			<div class="clear"></div>
 
-			<h5>@STJSBridge</h5>
-			<p>mark a type as STJS bridge, so it can be used in the code for
-				generation.</p>
+			<h4>@STJSBridge</h4>
+			<p>The annotated package or type is marked as a simple bridge between ST-JS
+				Java source code and an existing JavaScript library. The purpose of types
+				annotated (or contained withing packages that are annotated) with @STJSBridge
+				is only to provide information about types, fields and methods contained 
+				defined by an existing external JavaScript library to the Java tooling.
+				</p>
 
-			<h5>@Adapter</h5>
-			<p>useful when writing bridges for existent JavaScript types.
-				These are classes that are used to supply methods for Java types
-				when they don't have a method that their JavaScript counterpart has.
-				For example for Number in JavaScript you can do number.toFixed(2).
-				As in Java this method does not exist and as the Java Number-derived
-				classes are all final, the only alternative is to put this method in
-				another class - an adapter class. All the methods of an adapter
-				class must have their first parameter the object to which the method
-				is applied. The other parameters are the parameters normally
+			<h4>@Adapter</h4>
+			<p>The static methods in the annotated are marked as being members of another 
+				existing JavaScript type. This scope of this annotation is rather narrow, 
+				and is used by ST-JS to make it possible to use all the methods that the 
+				JavaScript standard library defines for types analog to those in the 
+				java.lang package, such as Number(and its subclasses), String, Object, 
+				etc...</p>
+			<p>ST-JS tries to keep the Java code as close as possible to the generated
+				JavaScript code, and therefore uses java.lang.Number (and subclasses) 
+				and java.lang.String to represent the equivalent types of JavaScript.
+				However, the member methods of each of these types are different in Java
+				and in JavaScript. ST-JS hides this difference by providing JavaScript
+				implementations of Java methods in stjs.js (when the Java method doesn't 
+				exist in JavaScript), and by using @Adapter Java methods corresponding 
+				to the JavaScript methods (when the JavaScript method doesn't exist in Java).
+				</p>
+			<p>For all the methods of an adapter class, the first parameter must be object 
+				to which the method is applied. The other parameters are the parameters normally
 				supplied to the JavaScript method.</p>
 
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Java (declaration)
+@Adapter
+public class JSNumberAdapter {
+  public static String toFixed(Number n, int p) {
+    throw new UnsupportedOperationException();
+  }
 
-			<h5>@Template</h5>
+  public static String toPrecision(Number n, int p) {
+    throw new UnsupportedOperationException();
+  }
+}
+
+// Java (usage)
+public class Something {
+  public Something(int val){
+    String fixed = JSNumberAdapter.toFixed(val, 2);
+  }
+}
+</pre>
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript (declaration)
+
+
+// nothing is generated. The implementation is 
+// already provided by the bridged library
+
+
+
+
+
+
+
+// JavaScript (usage)
+
+Something = function(val){
+    var fixed = val.toFixed(2);
+}
+</pre>
+			</div>
+			<div class="clear"></div>
+
+
+			<h4>@Template</h4>
 			<p>this annotation can be used on a method to control how the
 				call to this method will be generated. The parameter taken by this
 				annotation is a name of a defined template. Currently only
@@ -323,174 +471,158 @@ Something = function(){
 				object.$get(i) for example will generate object.$get(i) instead of
 				object[i].</p>
 
-			<h4>Special fields and methods</h4>
-			<p>Most of the Java code you write will be translated basically
-				as-is to its JavaScript counterpart. However, there are some
-				JavaScript constructs that cannot be written as-is in Java. For
-				these cases, ST-JS provides workarounds as special fields and
-				methods.</p>
-			<p>All of those special fields and methods are easy to identify:
-				there name always starts with the dollar sign ($). When you use
-				these methods you should expect the generated JavaScript code to
-				look slighty different (it is usually prettier, actually) than the
-				corresponding Java construct.</p>
-			<p>Here is the list of these constructs and methods:
-			<table class="specialMethods">
-				<tr>
-					<th>Java</th>
-					<th>JavaScript</th>
-					<th>Description</th>
-				</tr>
-				<tr>
-					<th colspan="3">org.stjs.javascript.JSCollections</th>
-				</tr>
-				<tr>
-					<td class="java">$map(k1,v1,k2,v2)</td>
-					<td class="js">{k1:v1, k2:v2}</td>
-					<td class="desc">Create a map with the given keys and values</td>
-				</tr>
-				<tr>
-					<td class="java">$array(a, b, c)</td>
-					<td class="js">[a, b, c]</td>
-					<td class="desc">Create an array with the given items</td>
-				</tr>
-				<tr>
-					<td class="java">Array&lt;T&gt; a = $castArray(T[]b)</td>
-					<td class="js">var a=b</td>
-					<td class="desc">See a java array as the
-						org.stjs.javascript.Array type</td>
-				</tr>
-				<tr>
-					<th colspan="3">org.stjs.javascript.Map</th>
-				</tr>
-				<tr>
-					<td class="java">x.$put(a, b)</td>
-					<td class="js">x[a] = b</td>
-					<td class="desc">Put a key and a value in a map</td>
-				</tr>
-				<tr>
-					<td class="java">x.$get(a)</td>
-					<td class="js">x[a]</td>
-					<td class="desc">Retrieve a value from a map</td>
-				</tr>
-				<tr>
-					<td class="java">x.$delete(a)</td>
-					<td class="js">delete x[a]</td>
-					<td class="desc">Delete an entry from a map</td>
-				</tr>
-				<tr>
-					<th colspan="3">org.stjs.javascript.Array</th>
-				</tr>
-				<tr>
-					<td class="java">x.$get(a)</td>
-					<td class="js">x[a]</td>
-					<td class="desc">Retrieve an item from an array</td>
-				</tr>
-				<tr>
-					<td class="java">x.$set(index, val)</td>
-					<td class="js">x[index] = val</td>
-					<td class="desc">Modify an item in an array</td>
-				</tr>
-
-				<tr>
-					<th colspan="3">org.stjs.javascript.JsObjectAdapter</th>
-				</tr>
-				<tr>
-					<td class="java">propsMap = $properties(obj)</td>
-					<td class="js">propsMap = obj</td>
-					<td class="desc">see an object as a map of its properties</td>
-				</tr>
-				<tr>
-					<td class="java">T obj = $object(map)</td>
-					<td class="js">var obj = map</td>
-					<td class="desc">see map as an object of a given type with the
-						same properties</td>
-				</tr>
-				<tr>
-					<td class="java">$prototype(obj)</td>
-					<td class="js">obj.prototype</td>
-					<td class="desc">Return the prototype of a JavaScript object</td>
-				</tr>
-				<tr>
-					<td class="java">$constructor(obj)</td>
-					<td class="js">obj.constructor</td>
-					<td class="desc">Return the constructor of a JavaScript object</td>
-				</tr>
-				<tr>
-					<td class="java">$js(javascriptCode)</td>
-					<td class="js">javascriptCode</td>
-					<td class="desc">Replaces with the given javascriptCode (only
-						String literals accepted). Use it only in extreme cases as it
-						makes it impossible to minimize the code.</td>
-				</tr>
-				<tr>
-					<th colspan="3">org.stjs.javascript.Global</th>
-				</tr>
-				<tr>
-					<td class="java">$or(a,b,c)</td>
-					<td class="js">a || b || c</td>
-					<td class="desc">Return first value the is equivalent to true
-						in JavaScript</td>
-				</tr>
-			</table>
 
 
+			<h4>Special methods (ie: what is $length() for)</h4>
+			<p>Sometimes it is more convenient to write STJS bridges as Java 
+				interfaces rather than Java classes. This is how we decided to write
+				the jQuery bridge, for example. When writing such a bridge using interfaces
+				you quickly hit a problem: you need to expose an instance field within 
+				the interface. As you know, this is impossible to do in java. You would want
+				to do this:</p>
 
-			When writing STJS bridges as Java interfaces (like the jQuery one is
-			done), you have sometimes the need to expose a field, thing that is
-			not possible with Java interfaces. So imagine you have a JavaScript
-			code:
-			<pre class="brush: java">
-var A = {
-	field: null,
-	method: function(){
-	}
-}
-</pre>
-
-			and you'd like to create an STJS bridge (so that you can use it in
-			Java) and you want to do it as Java interface (you can also do it as
-			a normal class). As you cannot have:
-			<pre class="brush: java">
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Java bridge
 public interface A {
-	public String field;
-	public String method();
+    public int field; //&lt; Illegal, oops...
+    public String method();
 }
 </pre>
-
-			what you can do is:
-			<pre class="brush: java">
-public interface A{
-	public String $field();
-	public void $field(String s); //don't add, if the field is read-only
-	public String method();
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript source (bridged lib)
+var A = {
+    field: null,
+    method: function(){}
 }
 </pre>
+			</div>
+			<div class="clear"></div>
 
-			The code <i>a.$field("abc")</i> will be correctly translated to <i>a.field
-				= "abc"</i> <br /> If you wanted, for example to keep the call to the <i>field</i>
-			method as is, you could've used the @Template("none") annotation on
-			the method, like the following code:
+			<p>As you probably know, it is impossible to place a field in an interface in
+				Java. ST-JS provides a workaround by translating methods whose names start 
+				with a $ sign as a field. Therefore, the previous case could be solved that
+				way.</p>
 
-			<pre class="brush: java">
-public interface A{
-	public String $field();
-	@Template("none")
-	public void $field(String s); //don't add, if the field is read-only
-	public String method();
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Java bridge (declaration)
+public interface A {
+    /** Legal */
+    public int $field(); 
+    /** Legal. Don't add, if the field is read-only*/
+    public void $field(int s); 
+    public String method();
+}
+
+// Java application code (usage)
+public class App {
+    public App(A a){
+        a.$field(42);
+        String b = a.$field();
+    }
 }
 </pre>
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript source (bridged lib)
+var A = {
 
-			So now the code <i>a.$field("abc")</i> will be translated to <i>a.$field("abc")</i>
-
-			<br /> In the next major version we'd like to use the @Template
-			mechanism instead of the method's name in order to control how the
-			code is generated.
-			</p>
-
-
+    field : null,
 
 
+    method : function(){}
+}
+
+// Generated JavaScript application code (usage)
+
+App = function(a){
+    a.field = 42;
+    var b = a.field;
+}
+</pre>
+			</div>
+			<div class="clear"></div>
+
+			<p>This works well in some cases, but not all. There are several javascript
+				libraries out there that actually define methods that start with a $ sign,
+				and you want you java code to properly reflect that without translating
+				the method to a field access. In this case, just mark the affected methods
+				with @Template("none").</p>
+
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Java bridge (declaration)
+public interface B {
+    @Template("none")
+    public String $method();
+}
+
+// Java application code (usage)
+public class App {
+    public App(B b){
+        int val = b.$method();
+    }
+}
+</pre>
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript source (bridged lib)
+var B = {
+
+    $method : function(){}
+}
+
+// Generated JavaScript application code (usage)
+
+App = function(b){
+    var val = b.$method();
+}
+</pre>
+			</div>
+			<div class="clear"></div>
+
+			<p>In the next major version we'd like to use the @Template
+				mechanism instead of the method's name in order to control how the
+				code is generated.</p>
+
+
+			<h3>The JavaScript and DOM bridge libraries</h3>
+
+			<p>The JavaScript library (js-lib) is a Java library that you need as 
+				a compile-time dependency for the Java source code. This library
+				exposes a conveniently exposes a properly typed version of the standard
+				JavaScript library and DOM objects as defined by the browsers. The
+				maven dependency for this library is the following:</p>
+
+<pre class="code prettyprint language-xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.st-js&lt;/groupId&gt;
+  &lt;artifactId&gt;js-lib&lt;/artifactId&gt;
+  &lt;version&gt;${stjs.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+			<p>ST-JS also comes with another Java library that allows you to share
+				objects easily between your client (JavaScript) app and you server (Java) by
+				providing concrete java implementations of some of the classes in the 
+				org.stjs.javascript package (such as Array and Map). The maven dependency for
+				this library is the following</p>
+
+<pre class="code prettyprint language-xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.st-js&lt;/groupId&gt;
+  &lt;artifactId&gt;server&lt;/artifactId&gt;
+  &lt;version&gt;${stjs.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+			<p>This dependency allows you to create maps and arrays and to serialize them 
+				(as JSON for example).</p>
 
 
 
