@@ -589,6 +589,26 @@ App = function(b){
 			<p>In the next major version we'd like to use the @Template
 				mechanism instead of the method's name in order to control how the
 				code is generated.</p>
+				
+				<!-- ------------------------  -->
+			<h4>STJS helper</h4>
+			<p>The org.stjs.javascript.stjs.STJS interface is the bridge to
+				the JavaScript code coming with the generator. It offers some
+				helpers for different type inexistent in JavaScript:
+			</p>
+			<ul>
+				<li><b>boolean isEnum(obj)</b> - return true if the given
+					JavaScript object is an enum entry (the JavaScript wrapper needed
+					to allow the usage of Java enums)</li>
+				<li><b>Exception exception(Object obj)</b> - allows you in
+					Java to use any object as an exception. At runtime, the executed
+					JavaScript code will return exactly the received parameter</li>
+				<li><b>public &lt;T&gt; T parseJSON(String json,
+						Class&lt;T&gt; clazz)</b> - parses a JSON string in a "type-safe"
+					manner by creating the object hierarchy using the given type
+					definition</li>
+			</ul>
+				
 
 
 			<h3>The JavaScript and DOM bridge libraries</h3>
@@ -599,6 +619,9 @@ App = function(b){
 				JavaScript library and DOM objects as defined by the browsers. The
 				maven dependency for this library is the following:</p>
 
+For JavaScript and DOM the global functions and objects (like setInterval or window) are found in the org.stjs.javascript.Global class.
+For jQuery, the $ object and function are found in the org.stjs.javascript.jquery.GlobalJQuery class. 
+
 <pre class="code prettyprint language-xml">
 &lt;dependency&gt;
   &lt;groupId&gt;org.st-js&lt;/groupId&gt;
@@ -606,6 +629,10 @@ App = function(b){
   &lt;version&gt;${stjs.version}&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
+
+			<p>We currently do not have a place to store the javadoc of those libraries, so
+			for the moment, please use the documentation provided by 
+			<a href="http://www.w3schools.com/jsref/default.asp">w3schools</a>.</p>
 
 			<p>ST-JS also comes with another Java library that allows you to share
 				objects easily between your client (JavaScript) app and you server (Java) by
@@ -625,103 +652,134 @@ App = function(b){
 				(as JSON for example).</p>
 
 
+			<h3>JavaScript library bridges</h3>
+			
+			 <p>As we have mentionned before, STJS is NOT a web framework, so no visual components 
+				or other components are bundled with STJS. You should therefore rely on existing 
+				components defined by other JavaScript frameworks like jQuery, DOJO, etc. There are 
+				two different ways integrate STJS-generated code with existing JavaScript libraries: </p>
+			
+			<p><em>By writing parts of your application in JavaScript,</em> and using the existing 
+				library and directly calling the generated STJS code. While you can probably make do with
+				this for a while, this is not the recommended technique.</p>
+			
+			<p>By writing all your application in ST-JS enabled Java, by writing a Java bridge for the
+				JavaScript library. This is the recommended approach, and will allow you to take 
+				advantage of all the benefits and tooling of Java, while still using your favorite,
+				cross-browser library.</p>
+
+			<p>STJS already provides bridges for jQuery and jQuery UI plugins. The bridge is composed 
+				mostly of Java interfaces that have the same name as their JavaScript counterpart.
+				Sometimes you may also need to provide global objects or functions (that will be 
+				implemented as static fields or methods of the object). In the case of a static method,
+				the method should throw UnsupportedOperationException - to indicate it's a method to be 
+				used in the JavaScript code (not in some server-side Java code).</p>
+
+			<p>One interesting feature of the bridges is that they are not submitted to the same list 
+				of constrains as the regular STJS Java code. This means that you can overload methods 
+				in order to provide more clarity to the user. A good example is the way plugins are 
+				built in jQuery where the same function (usually the plugin's name) has many different
+				usages: activate the plugin, change an option, get a state value, call a method, etc.</p>
+			
+			<p>The JQuery bridge must be added as a compile time dependency to your project. Here is
+				the maven dependency section for this artifact.</p>
+
+<pre class="code prettyprint language-xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;org.st-js&lt;/groupId&gt;
+  &lt;artifactId&gt;jquery&lt;/artifactId&gt;
+  &lt;version&gt;${stjs.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
 
 
+			<h3>The JavaScript Generator</h3>
+			<p>This is the STJS module that will actually take your both Java source code and the
+				corresponding compiled classes, and generate the corresponding JavaScript code that your
+				browser can execute. This module can be used either on the command line, or as a maven
+				plugin.</p>
+				
+			<p>To use the command line version of the module, please send us an email to
+				ask us to write the documentation for it...</p>
+				
+			<p>To use the generator as a maven plugin, include the following snippet in your pom.xml</p>
+
+<pre class="code prettyprint language-xml">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.st-js&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;${stjs.version}&lt;/version&gt;
+  &lt;executions&gt;
+    &lt;execution&gt;
+      &lt;id&gt;main&lt;/id&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;generate&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+    &lt;!-- if you use the JUnit runner --&gt;
+    &lt;execution&gt;
+      &lt;id&gt;test&lt;/id&gt;
+      &lt;goals&gt;
+        &lt;goal&gt;generate-test&lt;/goal&gt;
+      &lt;/goals&gt;
+    &lt;/execution&gt;
+  &lt;/executions&gt;
+  &lt;configuration&gt;
+    &lt;includes&gt;
+       &lt;include&gt;**/*.java&lt;/include&gt;
+    &lt;/includes&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
 
 
+			<h3>Maven plugin</h3>
+			<p>You can activate separately the JavaScript generation for
+				main sources and tests. Here are the goals of the maven plugin:</p>
+			<ul>
+				<li><b>generate</b> - activate the generation for the main
+					sources (in the "process-sources" phase)</li>
+				<li><b>generate-test</b> - activate the generation for the
+					test sources (in the "process-test-classes" phase)</li>
+				<li><b>copy-js</b> - copies the JavaScript files (either
+					generated or just bridged) from the dependencies to the final
+					artifact (war file), so that they can be used in the web pages</li>
+			</ul>
+			
+			<p>There are some parameters that can be used to configure the plugin:</p>
+			<ul>
+				<li><b>includes/include</b> - the path specifier describing
+					for what Java source you want to generate JavaScript. It's the
+					standard path Maven/Ant specifiers. Defaults to **.</li>
+				<li><b>excludes/exclude</b> - the path specifier describing
+					what Java source you want to exclude from the JavaScript generate.
+					It's the standard path Maven/Ant specifiers. Defaults to ""
+					(nothing).</li>
+				<li><b>allowedPackages</b> - it's a list of Java packages that
+					are allowed to be used inside the Java sources used for
+					generation. A common usage is when you reserved in the Java
+					sources a package for bridges to some JavaScript libraries. This
+					package should than be excluded from the generation process.</li>
+				<li><b>generateArrayHasOwnProperty</b> - true to generate
+					inside each array iteration if (!array.hasOwnProperty(index))
+					continue; in order to protect array iteration from the inclusion
+					of the methods added to Array's prototype. Default value if true</li>
+				<li><b>pack</b> - if true, a single JavaScript will be created
+					containing all the generated JavaScript files in a correct order
+					(follows the dependencies)</li>
+			</ul>
 
-
-
-
-
-
-
-			<div id="content">
-				<h1>Documentation</h1>
-
-				<h2>Maven plugin</h2>
-				<p>You can activate separately the JavaScript generation for
-					main sources and tests. Here are the goals of the maven plugin:
-				<ul>
-					<li><b>generate</b> - activate the generation for the main
-						sources (in the "process-sources" phase)</li>
-					<li><b>generate-test</b> - activate the generation for the
-						test sources (in the "process-test-classes" phase)</li>
-					<li><b>copy-js</b> - copies the JavaScript files (either
-						generated or just bridged) from the dependencies to the final
-						artifact (war file), so that they can be used in the web pages</li>
-				</ul>
-				There are some parameters that can be used to configure the plugin:
-				<ul>
-					<li><b>includes/include</b> - the path specifier describing
-						for what Java source you want to generate JavaScript. It's the
-						standard path Maven/Ant specifiers. Defaults to **.</li>
-					<li><b>excludes/excludes</b> - the path specifier describing
-						what Java source you want to exclude from the JavaScript generate.
-						It's the standard path Maven/Ant specifiers. Defaults to ""
-						(nothing).</li>
-					<li><b>allowedPackages</b> - it's a list of Java packages that
-						are allowed to be used inside the Java sources used for
-						generation. A common usage is when you reserved in the Java
-						sources a package for bridges to some JavaScript libraries. This
-						package should than be excluded from the generation process.</li>
-					<li><b>generateArrayHasOwnProperty</b> - true to generate
-						inside each array iteration if (!array.hasOwnProperty(index))
-						continue; in order to protect array iteration from the inclusion
-						of the methods added to Array's prototype. Default value if true</li>
-					<li><b>pack</b> - if true, a single JavaScript will be created
-						containing all the generated JavaScript files in a correct order
-						(follows the dependencies)</li>
-				</ul>
-				</p>
-
-				<!-- ------------------------  -->
-				<h2>STJS helper</h2>
-				<p>The org.stjs.javascript.stjs.STJS interface is the bridge to
-					the JavaScript code coming with the generator. It offers some
-					helpers for different type inexistent in JavaScript:
-				<ul>
-					<li><b>boolean isEnum(obj)</b> - return true if the given
-						JavaScript object is an enum entry (the JavaScript wrapper needed
-						to allow the usage of Java enums)</li>
-					<li><b>Exception exception(Object obj)</b> - allows you in
-						Java to use any object as an exception. At runtime, the executed
-						JavaScript code will return exactly the received parameter</li>
-					<li><b>public &lt;T&gt; T parseJSON(String json,
-							Class&lt;T&gt; clazz)</b> - parses a JSON string in a "type-safe"
-						manner by creating the object hierarchy using the given type
-						definition</li>
-				</ul>
-				</p>
-				<!-- ------------------------  -->
-				<h2>JUnit runner configuration</h2>
-
-				<p>The STJS JUnit runner runs your unit tests in one or multiple
-					browsers of your chosing. To do so, it builds an HTML page that
-					includes all the necessary HTML and javascript necessary to execute
-					your tests and return the result to JUnit. The HTML page that will
-					be sent to the browser includes the following things:
-				<ul>
-					<li>The javascript version of all the classes that are being
-						tested, as well as that of all classes they depend on.</li>
-					<li>If any bridge class or interface is used, the javascript
-						code that corresponds. For example, if the classes under test use
-						jQuery 1.7.1, then jQuery-1.7.1.js is imported in the HTML page
-						that is sent to the browser.</li>
-					<li>If specified with the <b>@ScriptsBefore</b> or <b>@ScriptsAfter</b>
-						annotations, a set of javascript files that are required for the
-						tests to pass but that are not declared as a STJS bridge class or
-						interface.
-					</li>
-					<li>If specified with the <b>@HtmlFixture</b> annotation, a
-						fragment of HTML that is required for the tests to pass.
-					</li>
-				</ul>
-				</p>
-
-				<p>Before using the JUnit runner you have to add the dependency
-					to your projects pom.xml:</p>
-				<pre class="brush: xml">
+			<h3>The JUnit runner</h3>
+			<h4>Using STJSTestDriverRunner to execute JavaScript unit tests in a browser</h4>
+			<p>The ST-JS JUnit runner module allows you to write your unit tests in ST-JS enabled
+				Java, have JUnit run them on a browser of your choice (or multiple browsers in
+				parallel) and report the test results.</p>
+			
+			<p>In order to use the STJS JUnit runner, you must first make sure it is included in
+				your test classpath. If you are using maven, you can simply add the following 
+				dependency to your pom.xml</p>
+				
+<pre class="code prettyprint language-xml">
 &lt;dependency&gt;
   &lt;groupId&gt;org.st-js&lt;/groupId&gt;
   &lt;artifactId&gt;test-helper&lt;/artifactId&gt;
@@ -730,72 +788,96 @@ App = function(b){
 &lt;/dependency&gt;
 </pre>
 
-				<p>
-					To activate the STJS JUnit runner you have to annotate your JUnit
-					test classes this way: <b>@RunWith(STJSTestDriverRunner.class)</b>.
+			<p>To activate the STJS JUnit runner, annotate your JUnit test classes this way
+<pre class="code prettyprint language-java">
+import org.stjs.testing.driver.STJSTestDriverRunner;
+import org.junit.annotations.Test;
+
+@RunWith(STJSTestDriverRunner.class)
+public class TestMyStuff {
+
+    @Test
+    public void testMyThing(){
+        // Your test code goes here
+    }
+}
+</pre>
+			<p>This is all you need to get your unit tests to execute in your system's default browser.
+				While writing your unit tests, you can of course use the main JUnit annotations such
+				as <em>@Test</em>, <em>@Before</em> and <em>@After</em></p>
+				
+			<h4>Customizing the way the unit tests run</h4>
+			<p>In order to run your unit tests in a browser, the STJS Junit runner builds an HTML page 
+				that includes all the necessary HTML and javascript necessary to execute your tests and 
+				return the result to JUnit. By default, the HTML page that is sent to the browser 
+				includes the following things:</p>
+			<ul>
+				<li>The javascript version of all the classes that are being
+					tested, as well as that of all classes they depend on.</li>
+				<li>If any bridge class or interface is used, the javascript
+					code that corresponds. For example, if the classes under test use
+					jQuery 1.7.1, then jQuery-1.7.1.js is imported in the HTML page
+					that is sent to the browser.</li>
+			</ul>
+			
+			<p>You can have a better control on what is sent in that HTML page by using some annotations
+				defined by STJS.</p>
 				</p>
 
-				<p>
-					Besides the standard JUnit annotations such as <b>@Test</b>, <b>@Before</b>,
-					<b>@After</b>, the STJSTestDriverRunner supports several other
-					custom annotations.
-				</p>
-
-				<ul>
-					<li>
-						<p>
-							<b>@HtmlFixture</b> is an optional annotation that can be applied
-							to your test class, and is used to force the STJSTestDriverRunner
-							to include a specific HTML fragment on the page. If the fragment
-							is short enough, it can be specified verbatim in the annotation.
-						</p> <pre class="brush: java">
+			<h5>@HtmlFixture</h5>
+			<p>This optional annotation can be applied to your test class to force the 
+				STJSTestDriverRunner to include a specific HTML fragment on the page it sends to the 
+				browser. This is useful if the piece of code you are unit testing does some DOM
+				manipulation and needs some DOM elements to be present to function as expected.</p>
+			<p>If the HTML fragment is short enough, it can be specified verbatim in the annotation.</p>
+<pre class="code prettyprint language-java">
 @RunWith(STJSTestDriverRunner.class)
 @HtmlFixture("&lt;div id='importantContainer'&gt;&lt;/div&gt;")
 public class TestSimpleFixture {
-	...
-}</pre>
-						<p>If the fragment is longer the annotation can specify a path
-							to a classpath resource that contains the HTML code. Then html
-							fragment file will be looked up using
-							ClassLoader.getResourceAsStream(). This means that
-							STJSTestDriverRunner (trough the ClassLoader) will first attempt
-							to find the file in your class path. If the file cannot be found
-							in your classpath, then STJSTestDriverRunner will look for the
-							file starting at the "document root" or your webapp, if any. For
-							a typical maven project, this means it will first look in
-							/target/WEB-INF/classes, and then in /target.</p> <pre
-							class="brush: java">
+    ...
+}
+</pre>
+			<p>If the fragment is longer, the annotation allows you to specify a path to a classpath 
+				resource that contains the HTML code. The HTML fragment file will be looked up using
+				ClassLoader.getResourceAsStream(). This means that STJSTestDriverRunner (trough the 
+				ClassLoader) will first attempt to find the file in your classpath. If the file cannot 
+				be found in your classpath, then STJSTestDriverRunner will look for the file starting at 
+				the "document root" or your webapp, if any. For a typical maven project, this means it 
+				will first look in <em>/target/WEB-INF/classes</em>, and then in <em>/target</em>.</p>
+				
+<pre class="code prettyprint language-java">
 @RunWith(STJSTestDriverRunner.class)
 @HtmlFixture(url = "/SomeComplexHtmlFragment.html")
 public class TestSimpleFixture {
 	...
-}</pre>
-					</li>
-					<li>
-						<p>
-							<b>@ScriptsBefore</b> and <b>@ScriptsAfter</b> are optional
-							annotations that can be applied to your test class, and are used
-							to force the STJSTestDriverRunner to include extra javascript
-							files in the &lt;head&gt; section of the HTML page that is sent
-							to the browser. Script files specified in <b>@ScriptsBefore</b>
-							will be included in the HTML page before the class under test and
-							all its dependencies. Script files specifed in <b>@ScriptsAfter</b>
-							will be included in the HTML page after the class under test and
-							all its dependencies.
-						</p>
-						<p>Each of the strings passed as a value to these annotations
-							will be used verbatim in the generated HTML. This means that you
-							can pass either a path to a javascript file that exists within
-							your project, or one that resides on another domain.</p> <pre
-							class="brush: java">
+}
+</pre>
+			
+			<h5>@ScriptsBefore and @ScriptsAfter</h5>
+			<p>These optional annotations can be applied to your test class to force the 
+				STJSTestDriverRunner to include extra javascript files in the &lt;head&gt; 
+				section of the HTML page that is sent to the browser. This is useful when you are using
+				a bridged JavaScript library that depends on a third party (unbridged) library, and that
+				the unit tests require this library to be in the JavaScript execution environment.</p>
+				
+			<p>Script files specified in 
+				<em>@ScriptsBefore</em> will be included in the HTML page before the class under test 
+				and all its dependencies. Script files specifed in <em>@ScriptsAfter</em> will be
+				included in the HTML page after the class under test and all its dependencies.</p>
+			
+			<p>Each of the strings passed as a value to these annotations will be used verbatim in the 
+				generated HTML. This means that you can pass either a path to a javascript file that 
+				exists within your project, or one that resides on another domain.</p> 
+<pre class="code prettyprint language-java">
 @RunWith(STJSTestDriverRunner.class)
 @ScriptsBefore({"/someLibBefore.js"})
 @ScriptsAfter({"http://example.com/someLibAfter.js"})
 public class TestHelloWorld {
 	...
 }</pre>
-						<p>Will generate the following fragment of HTML</p> <pre
-							class="brush: xml">
+						<p>Will generate the following fragment of HTML</p>
+						
+<pre class="code prettyprint language-html">
 &lt;head&gt;
   &lt;!-- contents of @ScriptsBefore --&gt;
   &lt;script src="/someLibBefore.js" type="text/javascript"&gt;&lt;/script&gt;
@@ -808,20 +890,18 @@ public class TestHelloWorld {
   &lt;script src="http://example.com/someLibAfter.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
 </pre>
-						<p>If the script passed to this annotation is a reference to a
-							file defined in your project (ie: it doesn't start with a
-							protocol handler such as http:, file:, ftp:, https:, etc...),
-							then the script file will be looked up using
-							ClassLoader.getResourceAsStream(). This means that
-							STJSTestDriverRunner (trough the ClassLoader) will first attempt
-							to find the file in your class path. If the file cannot be found
-							in your classpath, then STJSTestDriverRunner will look for the
-							file starting at the "document root" or your webapp, if any. For
-							a typical maven project, this means it will first look in
-							/target/WEB-INF/classes, and then in /target.</p>
-					</li>
-				</ul>
+			<p>If the script passed to this annotation is a reference to a file defined in your 
+				project (ie: it doesn't start with a protocol handler such as http:, file:, ftp:, 
+				https:, etc...), then the script file will be looked up using 
+				ClassLoader.getResourceAsStream(). This means that STJSTestDriverRunner (trough the 
+				ClassLoader) will first attempt to find the file in your class path. If the file 
+				cannot be found in your classpath, then STJSTestDriverRunner will look for the
+				file starting at the "document root" or your webapp, if any. For
+				a typical maven project, this means it will first look in
+				<em>/target/WEB-INF/classes</em>, and then in <em>/target</em>.</p>
 
+				
+			<h4>Configuring the JUnit runner</h4>
 				<p>
 					You can configure some of the test driver's parameters in a file
 					called <b>stjs-test.properties</b> that must be placed the root of
