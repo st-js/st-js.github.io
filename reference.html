@@ -65,7 +65,7 @@
 		</div>
 
 		<div class="grid_10">
-			<h3>Writing ST-JS code</h3>
+			<h3>Writing ST-JS code<a id="writing"></a></h3>
 			<p>Please start by reading our <a href="faq.html#whatDoesItLookLike">What does it look
 				like?</a> section. It contains most of the information you need to write usual ST-JS
 				code. On top of that, our <a href="tutorial.html">tutorial</a> will guide you through 
@@ -159,7 +159,7 @@ a || b || c               $or(a,b,c)
 			</pre>
 
 
-			<h3>Controlling the JavaScript output</h3>
+			<h3>Controlling the JavaScript output<a id="controlling"></a></h3>
 			<p>In most cases, there is no need to change the way the
 				JavaScript is generated. There are however come cases where this is
 				useful</p>
@@ -611,7 +611,7 @@ App = function(b){
 				
 
 
-			<h3>The JavaScript and DOM bridge libraries</h3>
+			<h3>The JavaScript and DOM bridge libraries<a id="jsdombridge"></a></h3>
 
 			<p>The JavaScript library (js-lib) is a Java library that you need as 
 				a compile-time dependency for the Java source code. This library
@@ -652,7 +652,7 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 				(as JSON for example).</p>
 
 
-			<h3>JavaScript library bridges</h3>
+			<h3>JavaScript library bridges<a id="jslibbridge"></a></h3>
 			
 			 <p>As we have mentionned before, STJS is NOT a web framework, so no visual components 
 				or other components are bundled with STJS. You should therefore rely on existing 
@@ -699,7 +699,8 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 </pre>
 
 
-			<h3>The JavaScript Generator</h3>
+			<h3>The JavaScript Generator<a id="generator"></a></h3>
+
 			<p>This is the STJS module that will actually take your both Java source code and the
 				corresponding compiled classes, and generate the corresponding JavaScript code that your
 				browser can execute. This module can be used either on the command line, or as a maven
@@ -739,7 +740,7 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 </pre>
 
 
-			<h3>Maven plugin</h3>
+			<h3>Maven plugin<a id="maven"></a></h3>
 			<p>You can activate separately the JavaScript generation for
 				main sources and tests. Here are the goals of the maven plugin:</p>
 			<ul>
@@ -775,7 +776,7 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 					(follows the dependencies)</li>
 			</ul>
 
-			<h3>The JUnit runner</h3>
+			<h3>The JUnit runner<a id="junit"></a></h3>
 			<h4>Using STJSTestDriverRunner to execute JavaScript unit tests in a browser</h4>
 			<p>The ST-JS JUnit runner module allows you to write your unit tests in ST-JS enabled
 				Java, have JUnit run them on a browser of your choice (or multiple browsers in
