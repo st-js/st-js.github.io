@@ -34,7 +34,7 @@
 
 		<div class="grid_2">
 			<ul class="menu">
-				<li><a href="gettingStarted.html">FAQ</a>
+				<li><a href="faq.html">FAQ</a>
 					<ul class="submenu">
 						<li><a href="faq.html#whatIsStjs">What is ST-JS?</a></li>
 						<li><a href="faq.html#whyStjs">Why ST-JS?</a></li>
@@ -86,6 +86,11 @@
 				possible. This is why ST-JS does not impose or even suggest the use
 				of any particular framework or library, be it server-side or
 				client-side.</p>
+
+
+
+
+
 
 			<h3>
 				<a id="whyStjs">Why ST-JS? (aka: the genesis of ST-JS)</a>
@@ -148,17 +153,12 @@
 					how to do that. And for the cases where the refactoring is more
 					complicated and done manually, the Java compiler instantly checks
 					the correctness of the code.</li>
+			</ul>
 			</p>
 			<p>Within about a week, all the existing JavaScript code was
 				converted to Java code following the ST-JS conventions. Since then,
 				the project was able to grow freely and healthily.</p>
-		</div>
 
-
-
-
-
-		<div class="prefix_2 grid_10">
 			<h3><a id="whyNotGwt">Why not GWT/Dart/TypeScript/CoffeScript/etc... ?</a></h3>
 			<p>Before deciding to write ST-JS, we have listed our needs, and
 				studied the existing alternatives. Our needs were:</p>
@@ -184,13 +184,11 @@
 				You can safely dump your java source files, and continue your
 				development in JavaScript directly, by basing it on the generated
 				JavaScript.</p>
-		</div>
 
 
 
 
 
-		<div class="prefix_2 grid_10">
 			<h3><a id="howDoesItWork">How does it work?</a></h3>
 			ST-JS is made of multiple components that each have a specific purpose
 			<ul>
@@ -229,12 +227,11 @@
 					phantomjs, etc...).
 				</li>
 			</ul>
-		</div>
 
 
 
 
-		<div class="prefix_2 grid_10">
+
 			<h3><a id="shouldIUseIt">Should I use it?</a></h3>
 			<p>As for many other tools, the answer is: "It depends".</p>
 			<p>The benefits of ST-JS are most useful if your project matches one or more of the following criteria</p>
@@ -247,7 +244,6 @@
 			fact that you have to run the ST-JS generator on your Java code everytime you change it. ST-JS comes with
 			a few integrated mechanisms to do it automatically by itself, but at the time writing, it only works properly
 			in eclipse.</p>
-		</div>
 
 
 
@@ -255,7 +251,6 @@
 
 
 
-		<div class="push_2 grid_10">
 			<h3><a id="whatDoesItLookLike">What does it look like?</a></h3>
 			<p>Here is an example of a code written in Java and the
 				corresponding generated JavaScript. The Java code may seem a bit
@@ -267,10 +262,9 @@
 				resemblance maintained throughout the library design</p>
 
 			<h4>Short example</h4>
-		</div>
 
-		<div class="prefix_2 grid_5">
-			<pre class="code prettyprint lang-java">
+			<div class="grid_5 alpha">
+<pre class="code prettyprint lang-java">
 // Java
 
 $("#form").submit(new EventHandler() {
@@ -281,10 +275,10 @@ $("#form").submit(new EventHandler() {
     that.stocks.push(stockData.stock);
   }
 });</pre>
-		</div>
+			</div>
 
-		<div class="grid_5">
-			<pre class="code prettyprint lang-javascript">
+			<div class="grid_5 omega">
+<pre class="code prettyprint lang-javascript">
 // Generated JavaScript
 
 $("#form").submit(function(ev) {
@@ -296,10 +290,12 @@ $("#form").submit(function(ev) {
 
 });
 </pre>
-		</div>
+			</div>
+			<div class="clear"></div>
 
 
-		<div class="prefix_2 grid_10">
+
+
 			<h4>Some more javascript constructs</h4>
 			<p>The problem with having JavaScript code generated from Java is
 				that Java is less rich than JavaScript. There are JavaScript
@@ -315,9 +311,8 @@ $("#form").submit(function(ev) {
 				this syntax is the basis of the JSON format.</p>
 			<p>ST-JS promotes the usage of a similar syntax in Java, but
 				using proper type declarations.</p>
-		</div>
-		<div class="prefix_2 grid_5">
-			<pre class="code prettyprint lang-java">
+			<div class="grid_5 alpha">
+<pre class="code prettyprint lang-java">
 // Java
 
 StockData stock = new StockData() {{
@@ -327,8 +322,8 @@ StockData stock = new StockData() {{
 }};</pre>
 		</div>
 
-		<div class="grid_5">
-			<pre class="code prettyprint lang-javascript">
+		<div class="grid_5 omega">
+<pre class="code prettyprint lang-javascript">
 // Generated JavaScript
 
 var stock = {
@@ -337,10 +332,10 @@ var stock = {
 	"stock" : "ABC"
 };
 </pre>
-		</div>
-		<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
 
-		<div class="prefix_2 grid_10">
+
 			<h5>Hashes / Associative arrays / Maps</h5>
 			<p>In JavaScript, every object can also be used as an associative
 				array with string keys. This allows each field of an object to be
@@ -352,10 +347,10 @@ var stock = {
 				being used in the translated javascript. This capability is provided
 				via the <strong>org.stjs.javascript.Map</strong> class
 			</p>
-		</div>
 
-		<div class="prefix_2 grid_5">
-			<pre class="code prettyprint lang-java">
+
+			<div class="grid_5 alpha">
+<pre class="code prettyprint lang-java">
 // Java
 
 // This Map is a org.stjs.javascript.Map
@@ -368,10 +363,10 @@ Map&lt;String, Object&gt; stock = $map(
 Double close = map.$get("close");
 stock.$set("close", 4.8);
 stock.$delete("close");</pre>
-		</div>
+			</div>
 
-		<div class="grid_5">
-			<pre class="code prettyprint lang-javascript">
+			<div class="grid_5 omega">
+<pre class="code prettyprint lang-javascript">
 // Generated JavaScript
 
 
@@ -384,10 +379,9 @@ var stock = {
 var close = stock["close"];
 stock["close"] = 4.8;
 delete stock["close"];</pre>
-		</div>
-		<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
 
-		<div class="prefix_2 grid_10">
 			<h5>Arrays</h5>
 			<p>
 				JavaScript arrays behave like a mixture of a Java's lists and
@@ -398,10 +392,9 @@ delete stock["close"];</pre>
 				array, this class provides $get/$set methods that will generate the
 				expected code in JavaScript
 			</p>
-		</div>
 
-		<div class="prefix_2 grid_5">
-			<pre class="code prettyprint lang-java">
+			<div class="grid_5 alpha">
+<pre class="code prettyprint lang-java">
 // Java
 
 Array&lt;Integer&gt; array = $array(1, 5, 10);
@@ -422,8 +415,8 @@ for(String i : array){
 }</pre>
 		</div>
 
-		<div class="grid_5">
-			<pre class="code prettyprint lang-javascript">
+			<div class="grid_5 omega">
+<pre class="code prettyprint lang-javascript">
 // Generated Javascript
 
 var array = [1, 5, 10];
@@ -443,10 +436,9 @@ for(var i : array){
     console.info(i + " : " + array[i]);
 }
 </pre>
-		</div>
-		<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
 
-		<div class="prefix_2 grid_10">
 			<h5>Inheritance</h5>
 			<p>Class inheritance is a fundamental concept in Class-based,
 				Object-Oriented languages like Java. That concept doesn't exist in
@@ -460,10 +452,9 @@ for(var i : array){
 				JavaScript. This is an acceptable compromise given that the
 				visibility restrictions are enforced by the Java compiler before the
 				JavaScript code is generated.</p>
-		</div>
 
-		<div class="prefix_2 grid_5">
-			<pre class="code prettyprint lang-java">
+			<div class="grid_5 alpha">
+<pre class="code prettyprint lang-java">
 // Java
 
 public class Child extends Parent {
@@ -487,9 +478,9 @@ public class Child extends Parent {
         staticField += 1;
     }
 }</pre>
-		</div>
-		<div class="grid_5">
-			<pre class="code prettyprint lang-javascript">
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint lang-javascript">
 // Generated JavaScript
 
 
@@ -513,10 +504,9 @@ stjs.extend(Child, Parent, [],
         Child.staticField += 1;
     }
 });</pre>
-		</div>
-		<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
 
-		<div class="prefix_2 grid_10">
 			<h5>Comparison</h5>
 			<p>
 				The comparison of objects or primitives is slightly different
@@ -534,9 +524,9 @@ stjs.extend(Child, Parent, [],
 				initial Java code wouldn't allow it).
 			</p>
 
-		</div>
 
-		<div class="prefix_2 grid_10">
+
+
 			<h3><a id="limitations">Limitations, aka: "What you cannot do in ST-JS?"</a></h3>
 			<p>Due to the fact that ST-JS strives to keep the generated
 				JavaScript code as close as possible to your source Java code, it
