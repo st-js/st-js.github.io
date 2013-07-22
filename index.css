@@ -167,7 +167,7 @@ body {
 	color: #10C500;
 }
 
-h4 {what you canno
+h4 {
 	font-weight: bold;
 	font-size: 1.2em;
 	color: #10C500;
@@ -200,4 +200,19 @@ ol.tutorial li {
 
 ol.tutorial .code {
 	margin-left: 25px;
+}
+
+table.properties {
+}
+
+table.properties th,
+table.properties td{
+	border: 1px solid #BBBBBB;
+	padding: 5px;
+}
+
+
+table.properties td.name {
+	font-weight: bold;
+	vertical-align: middle;
 }
