@@ -234,3 +234,15 @@ table.properties td.name {
 	font-weight: bold;
 	color: #000;
 }
+
+.news .release {
+	font-weight: bold;
+	font-size:1em;
+}
+
+.news .date {
+	font-weight: bold;
+	font-size:1em;
+	color:#10C500;
+	margin:15px 5px 5px;
+}
