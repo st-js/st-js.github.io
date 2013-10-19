@@ -61,7 +61,6 @@
 					<li><a href="reference.html#controlling">Controlling JS output</a></li>
 					<li><a href="reference.html#jsdombridge">JS/DOM bridges</a></li>
 					<li><a href="reference.html#jslibbridge">JS Library bridges</a></li>
-					<li><a href="reference.html#generator">Generator</a></li>
 					<li><a href="reference.html#maven">Maven plugin</a></li>
 					<li><a href="reference.html#eclipse">Eclipse integration</a></li>
 					<li><a href="reference.html#junit">JUnit runner</a></li>
@@ -107,7 +106,7 @@
 			<li>Add the <i>stjs.version</i> property - easier to have the same version between the different STJS artifacts
 <pre class="code prettyprint lang-xml">
 &lt;properties&gt;
-    &lt;stjs.version&gt;1.3.1&lt;/stjs.version&gt;
+    &lt;stjs.version&gt;2.0.0&lt;/stjs.version&gt;
 &lt;/properties&gt;
 </pre>
 			</li>
@@ -132,9 +131,9 @@
 			<li>Add the dependency to the STJS JavaScript (basic and DOM) bridge library
 <pre class="code prettyprint lang-xml">
 &lt;dependency&gt;
-    &lt;groupId&gt;org.st-js&lt;/groupId&gt;
-    &lt;artifactId&gt;js-lib&lt;/artifactId&gt;
-    &lt;version&gt;${stjs.version}&lt;/version&gt;
+    &lt;groupId&gt;org.st-js.bridge&lt;/groupId&gt;
+    &lt;artifactId&gt;html&lt;/artifactId&gt;
+    &lt;version&gt;5.0.bv0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 			</li>

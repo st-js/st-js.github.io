@@ -66,7 +66,6 @@
 						<li><a href="reference.html#controlling">Controlling JS output</a></li>
 						<li><a href="reference.html#jsdombridge">JS/DOM bridges</a></li>
 						<li><a href="reference.html#jslibbridge">JS Library bridges</a></li>
-						<li><a href="reference.html#generator">Generator</a></li>
 						<li><a href="reference.html#maven">Maven plugin</a></li>
 						<li><a href="reference.html#eclipse">Eclipse integration</a></li>
 						<li><a href="reference.html#junit">JUnit runner</a></li>
@@ -79,7 +78,7 @@
 		</div>
 
 		<div class="grid_10">
-			<h3>Writing ST-JS code<a id="writing"></a></h3>
+			<h3><a id="writing">Writing ST-JS code</a></h3>
 			<p>Please start by reading our <a href="faq.html#whatDoesItLookLike">What does it look
 				like?</a> section. It contains most of the information you need to write usual ST-JS
 				code. On top of that, our <a href="tutorial.html">tutorial</a> will guide you through
@@ -173,7 +172,7 @@ a || b || c               $or(a,b,c)
 			</pre>
 
 
-			<h3>Controlling the JavaScript output<a id="controlling"></a></h3>
+			<h3><a id="controlling">Controlling the JavaScript output</a></h3>
 			<p>In most cases, there is no need to change the way the
 				JavaScript is generated. There are however come cases where this is
 				useful</p>
@@ -480,20 +479,29 @@ Something = function(val){
 			<h4>@Template</h4>
 			<p>this annotation can be used on a method to control how the
 				call to this method will be generated. The parameter taken by this
-				annotation is a name of a defined template. Currently only
-				@Template("none") is defined, that leaves a method call as-is.
+				annotation is a name of a defined template. 
 				object.$get(i) for example will generate object.$get(i) instead of
-				object[i].</p>
+				object[i].
+				The current list of templates:
+				<pre>
+adapter=org.stjs.generator.writer.template.AdapterTemplate
+assert=org.stjs.generator.writer.template.AssertTemplate
+array=org.stjs.generator.writer.template.ArrayTemplate
+delete=org.stjs.generator.writer.template.DeleteTemplate
+get=org.stjs.generator.writer.template.GetTemplate
+invoke=org.stjs.generator.writer.template.InvokeTemplate
+js=org.stjs.generator.writer.template.JsTemplate
+map=org.stjs.generator.writer.template.MapTemplate
+toProperty=org.stjs.generator.writer.template.MethodToPropertyTemplate
+none=org.stjs.generator.writer.template.NoneTemplate
+or=org.stjs.generator.writer.template.OrTemplate
+properties=org.stjs.generator.writer.template.PropertiesTemplate
+put=org.stjs.generator.writer.template.PutTemplate
+set=org.stjs.generator.writer.template.SetTemplate
+typeOf=org.stjs.generator.writer.template.TypeOfTemplate
+</pre>				 
+			</p>
 
-
-
-			<h4>Special methods (ie: what is $length() for)</h4>
-			<p>Sometimes it is more convenient to write STJS bridges as Java
-				interfaces rather than Java classes. This is how we decided to write
-				the jQuery bridge, for example. When writing such a bridge using interfaces
-				you quickly hit a problem: you need to expose an instance field within
-				the interface. As you know, this is impossible to do in java. You would want
-				to do this:</p>
 
 			<div class="grid_5 alpha">
 <pre class="code prettyprint language-java">
@@ -516,17 +524,17 @@ var A = {
 			<div class="clear"></div>
 
 			<p>As you probably know, it is impossible to place a field in an interface in
-				Java. ST-JS provides a workaround by translating methods whose names start
-				with a $ sign as a field. Therefore, the previous case could be solved that
-				way.</p>
+				Java. ST-JS provides a workaround by using the template <b>property</b>.</p>
 
 			<div class="grid_5 alpha">
 <pre class="code prettyprint language-java">
 // Java bridge (declaration)
 public interface A {
     /** Legal */
+    @Template("toProperty")
     public int $field();
     /** Legal. Don't add, if the field is read-only*/
+    @Template("toProperty")
     public void $field(int s);
     public String method();
 }
@@ -561,49 +569,7 @@ App = function(a){
 			</div>
 			<div class="clear"></div>
 
-			<p>This works well in some cases, but not all. There are several javascript
-				libraries out there that actually define methods that start with a $ sign,
-				and you want you java code to properly reflect that without translating
-				the method to a field access. In this case, just mark the affected methods
-				with @Template("none").</p>
-
-			<div class="grid_5 alpha">
-<pre class="code prettyprint language-java">
-// Java bridge (declaration)
-public interface B {
-    @Template("none")
-    public String $method();
-}
-
-// Java application code (usage)
-public class App {
-    public App(B b){
-        int val = b.$method();
-    }
-}
-</pre>
-			</div>
-			<div class="grid_5 omega">
-<pre class="code prettyprint language-javascript">
-// JavaScript source (bridged lib)
-var B = {
-
-    $method : function(){}
-}
-
-// Generated JavaScript application code (usage)
-
-App = function(b){
-    var val = b.$method();
-}
-</pre>
-			</div>
-			<div class="clear"></div>
-
-			<p>In the next major version we'd like to use the @Template
-				mechanism instead of the method's name in order to control how the
-				code is generated.</p>
-
+		
 				<!-- ------------------------  -->
 			<h4>STJS helper</h4>
 			<p>The org.stjs.javascript.stjs.STJS interface is the bridge to
@@ -625,7 +591,7 @@ App = function(b){
 
 
 
-			<h3>The JavaScript and DOM bridge libraries<a id="jsdombridge"></a></h3>
+			<h3><a id="jsdombridge">The JavaScript and DOM bridge libraries</a></h3>
 
 			<p>The JavaScript library (js-lib) is a Java library that you need as
 				a compile-time dependency for the Java source code. This library
@@ -638,9 +604,9 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 
 <pre class="code prettyprint language-xml">
 &lt;dependency&gt;
-  &lt;groupId&gt;org.st-js.bridges&lt;/groupId&gt;
+  &lt;groupId&gt;org.st-js.bridge&lt;/groupId&gt;
   &lt;artifactId&gt;html&lt;/artifactId&gt;
-  &lt;version&gt;4.01.0&lt;/version&gt;
+  &lt;version&gt;5.0.bv0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
@@ -666,7 +632,7 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 				(as JSON for example).</p>
 
 
-			<h3>JavaScript library bridges<a id="jslibbridge"></a></h3>
+			<h3><a id="jslibbridge">JavaScript library bridges</a></h3>
 
 			 <p>As we have mentionned before, STJS is NOT a web framework, so no visual components
 				or other components are bundled with STJS. You should therefore rely on existing
@@ -706,14 +672,14 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 
 <pre class="code prettyprint language-xml">
 &lt;dependency&gt;
-  &lt;groupId&gt;org.st-js.bridges&lt;/groupId&gt;
+  &lt;groupId&gt;org.st-js.bridge&lt;/groupId&gt;
   &lt;artifactId&gt;jqueryui&lt;/artifactId&gt;
-  &lt;version&gt;1.8.24.0&lt;/version&gt;
+  &lt;version&gt;1.10.3.bv0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
 
-			<h3>The JavaScript Generator<a id="generator"></a></h3>
+			<h3><a id="maven">Maven Plugin - the JavaScript Generator</a></h3>
 
 			<p>This is the STJS module that will actually take your both Java source code and the
 				corresponding compiled classes, and generate the corresponding JavaScript code that your
@@ -754,7 +720,7 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 </pre>
 
 
-			<h3>Maven plugin<a id="maven"></a></h3>
+			<h2>Configuration</h3>
 			<p>You can activate separately the JavaScript generation for
 				main sources and tests. Here are the goals of the maven plugin:</p>
 			<ul>
@@ -790,7 +756,48 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 					(follows the dependencies)</li>
 			</ul>
 
-			<h3>The JUnit runner<a id="junit"></a></h3>
+<!-- ------------------------------------------------------------ -->
+<h3><a id="eclipse">Maven configuration for auto-generation in Eclipse</a></h3>
+<p>If you use Eclipse you can take advantage of the Maven / Eclipse integration.
+The Javascript code is generated each time the corresponding Java class is modified and saved.
+This way any modification you bring to your code will be instantly observed on the browser!
+Note: you need the at least the 1.0 version of the <a href="http://wiki.eclipse.org/M2E_updatesite_and_gittags" target="_blank">Eclipse plugin for Maven</a>.
+</p>
+
+<pre class="code prettyprint language-xml">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.eclipse.m2e&lt;/groupId&gt;
+  &lt;artifactId&gt;lifecycle-mapping&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;lifecycleMappingMetadata&gt;
+      &lt;pluginExecutions&gt;
+        &lt;pluginExecution&gt;
+          &lt;pluginExecutionFilter&gt;
+            &lt;groupId&gt;org.st-js&lt;/groupId&gt;
+            &lt;artifactId&gt;
+              maven-plugin
+            &lt;/artifactId&gt;
+            &lt;versionRange&gt;
+              [${stjs.version},)
+            &lt;/versionRange&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;generate&lt;/goal&gt;
+              &lt;!-- if you use the test helper --&gt;
+              &lt;goal&gt;generate-test&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/pluginExecutionFilter&gt;
+          &lt;action&gt;
+             &lt;execute /&gt;
+          &lt;/action&gt;
+        &lt;/pluginExecution&gt;
+      &lt;/pluginExecutions&gt;
+    &lt;/lifecycleMappingMetadata&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
+<!-- ------------------------------------------------------------ -->
+			<h3><a id="junit">The JUnit runner</a></h3>
 			<h4>Using STJSTestDriverRunner to execute JavaScript unit tests in a browser</h4>
 			<p>The ST-JS JUnit runner module allows you to write your unit tests in ST-JS enabled
 				Java, have JUnit run them on a browser of your choice (or multiple browsers in
