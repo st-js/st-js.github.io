@@ -71,7 +71,8 @@
 						<li><a href="reference.html#Eclipse">Eclipse integration</a></li>
 						<li><a href="reference.html#junit">JUnit runner</a></li>
 					</ul></li>
-				<li><a href="bridges.html">Bridges</a></li>					
+				<li><a href="bridges.html">Bridges</a></li>
+				<li><a href="changelog.html">Changelog</a></li>																	
 				<li><a href="contributing.html">Contributing</a></li>
 				<li><a href="http://axcraciun.wordpress.com/">Blog</a></li>
 			</ul>
@@ -281,7 +282,7 @@
 // Java
 
 $("#form").submit(new EventHandler() {
-  public void onEvent(Event ev, HTMLElement THIS) {
+  public void onEvent(Event ev, Element THIS) {
     StockData stockData =
       that.updateStock($("#newStock").val());
     $(that.row(stockData)).appendTo("table tbody");
@@ -574,7 +575,7 @@ stjs.extend(Child, Parent, [],
 			</p>
 			<p>
 				<strong>Instance fields can only be initialized at
-					declaration with litterals.</strong> Therefore any instance field that is
+					declaration with literals.</strong> Therefore any instance field that is
 				not a primitive type, a Number, a String or null must be initialized
 				in the constructor.
 			</p>

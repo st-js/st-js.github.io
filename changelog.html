@@ -1,0 +1,325 @@
+<html>
+<head>
+	<title>ST-JS: Borrowing Java's syntax to write type-safe JavaScript</title>
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu Mono:regular,bold&subset=Latin">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" type="text/css" href="960.css" />
+
+	<link href="prettify-theme.css" rel="stylesheet" type="text/css" >
+	<script src="google-code-prettify/prettify.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-26575460-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+
+</head>
+<body onload="prettyPrint()">
+
+<div class="topHighlight">
+	<div class="container_12">
+		<div class="grid_9">
+			<h1><a href="index.html">ST-JS : Strongly Typed JavaScript</a></h1>
+			<h2>Borrowing Java's syntax to write type-safe JavaScript</h2>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="container_12 content">
+
+	<div class="grid_2">
+		<ul class="menu">
+			<li><a href="faq.html">FAQ</a>
+				<ul class="submenu">
+					<li><a href="faq.html#whatIsStjs">What is ST-JS?</a></li>
+					<li><a href="faq.html#whyStjs">Why ST-JS?</a></li>
+					<li><a href="faq.html#whyNotGwt">Why not GWT / TypeScript
+							/ etc...?</a></li>
+					<li><a href="faq.html#shouldIUseIt">Should I use it?</a></li>
+					<li><a href="faq.html#howDoesItWork">How does it work?</a></li>
+					<li><a href="faq.html#whatDoesItLookLike">What does it
+							look like?</a></li>
+					<li><a href="faq.html#limitations">Limitations</a></li>
+				</ul></li>
+			<li><a href="download.html">Download</a></li>
+			<li><a href="tutorial.html">Tutorial</a></li>
+			<li><a href="reference.html">Reference</a>
+				<ul class="submenu">
+					<li><a href="reference.html#writing">Writing ST-JS code</a></li>
+					<li><a href="reference.html#controlling">Controlling JS output</a></li>
+					<li><a href="reference.html#jsdombridge">JS/DOM bridges</a></li>
+					<li><a href="reference.html#jslibbridge">JS Library bridges</a></li>
+				<li><a href="reference.html#maven">Maven plugin</a></li>
+					<li><a href="reference.html#eclipse">Eclipse integration</a></li>
+					<li><a href="reference.html#junit">JUnit runner</a></li>
+				</ul></li>
+			<li><a href="bridges.html">Bridges</a></li>	
+			<li><a href="changelog.html">Changelog</a></li>								
+			<li><a href="contributing.html">Contributing</a></li>
+			<li><a href="http://axcraciun.wordpress.com/">Blog</a></li>
+		</ul>
+	</div>
+
+	<div class="grid_10">
+		<h3>Changelog</h3>
+
+
+<p>You can stay informed about new releases and other STJS-related announcements by following us on <a href="https://plus.google.com/u/0/communities/108349865113100538427">Google+</a></p>
+
+		<h5>Future plans</h5>
+		<ul class="changes">
+			<li>import existing Javascript projects in Java (STJS compatible) or at least create the corresponding bridge - (not sure a simple solution exists :) )</li>
+			<li>add support for Google Closure compiler (or build a similar tool based on Java obfuscation tools)</li>
+			<li>add bridge to Javascript API for mobile phones</li>
+		</ul>
+		
+		
+		
+		<h3>2.0.0 <span class="releaseDate">(06-Oct-2013)</span></h3> 
+		<p>
+		Starting with this release the bridges are no longer in the main repository. They will have they own independent releases, linked to the release
+		of the JavaScript libraries they are bridging.<br>
+		All there are a bunch of examples that were also separated from the main repository <a href="https://github.com/st-js/bridges-examples">here</a>.
+		</p>
+		<h5>Bridges</h5>
+		<ul class="changes">
+			<li>New bridge for <a href="https://github.com/st-js/html-bridge">HTML 5</a></li>
+			<li>New bridge for <a href="https://github.com/st-js/jquery-bridge">jQuery 1.9.1</a></li>
+			<li>New bridge for <a href="https://github.com/st-js/jqueryui-bridge">jQueryUI 1.10.3</a></li>
+			<li>New bridge for <a href="https://github.com/st-js/underscorejs-bridge">Underscore.js 1.5.1</a></li>
+			<li>New bridge for <a href="https://github.com/st-js/backbonejs-bridge">Backbone.js 1.0.0</a></li>
+			<li>New bridge for <a href="https://github.com/st-js/angularjs-bridge">AngularJS 1.0.7</a></li>
+			<li>added common function/callback interface</li>
+		</ul>
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>fix issue #21 - problems when packing bridges</li>
+			<li>do not copy empty folders</li>
+			<li>fixed fully qualified access to GlobalScope object</li>
+			<li>Command line tool to use ST-JS without the need of Maven</li>		
+		</ul>
+
+		<h3>1.4.0 <span class="releaseDate">(11-Aug-2013)</span></h3> 
+		<p>
+		The 1.4.0 release is the last one before removing the bridges from the main project. It's main goal was to externalize the method call templates, to simplify the creation of other bridges.
+		Here is the list of the changes:
+		</p>
+		<h5>Common</h5>
+		<ul class="changes">
+			<li>added static code analysis: PMD, Findbugs, Checkstyle</li>
+			<li>remove the site from the repository and put it to st-js.github.io</li>
+		</ul>
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>remove the display of file names during compilation - now only the number of the processed files is displayed</li>
+			<li>add @Template annotation and the possibility to add custom made method call templates</li>
+			<li>fixed #16 - wrong integer division</li>
+			<li>fixed #18 source encoding - now configurable from plugin also</li>
+		</ul>
+		<h5>Test Helper</h5>
+		<ul class="changes">
+			<li>added improved stack trace support for tests by using http://stacktracejs.com</li>
+		</ul>
+		
+		
+		
+		
+		<h3>1.3.1 <span class="releaseDate">(14-Feb-2013)</span></h3> 
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>add exceptions js basic implementation and fix issue #12</li>
+			<li>fixed issue #13 - parentheses around typeof</li>
+			<li>fixed issue #10 - use topological order iterator to sort dependencies</li>
+			<li>fixed issue #9 - instanceof is handled correctly</li>
+		</ul>
+		
+
+
+
+		<h3>1.3.0 <span class="releaseDate">(23-Jan-2013)</span></h3>
+		<h5>JQuery/DOM bridge</h5>
+		<ul class="changes">
+			<li>added minified version of jquery and jquery ui;</li>
+			<li>added the sources of jquery ui (1.8.24)</li>
+			<li>issue #6 added originalEvent property to jQuery Event</li>
+		</ul>
+		<h5>Test Helper</h5>
+		<ul class="changes">
+			<li>Rewrite completely the test driver. Now it runs remote browsers as well as directly the browser in a regular or headless way.</li>
+			<li>the location of the config file can now be set via the stjs.test.config system property</li>
+			<li>@Test.expected is now supported (with some limitations)</li>
+			<li>issue #8: added handling of @Before and @After in test helper</li>
+			<li>added @ScriptsBefore and @ScriptsAfter to include scripts for unit tests and deprecate @Scripts</li>
+			<li>fix issue #5 - junit assertEquals for double doesn't take into account deltas</li>
+			<li>use the sources STJSBridge parameter in test helper;</li>
+		</ul>
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>Generate static initializers correctly, and make sure that their local variables don't bleed into the global scope - Support running the main method from @GlobalScope classes.</li>
+			<li>Global scope fields and methods are now handled correctly.</li>
+			<li>Do not attempt to generate abstract methods in JS</li>
+			<li>added stjs.trunc() around for integer casts and integer divisions</li>
+			<li>Properly name constructors of inner types and anonymous classes. This makes debugging in the browser easier because modern browser will use the constructor.name property as type name for all objects.</li>
+			<li>Fixed instantiation of Anonymous types</li>
+			<li>Do not allow javascript keywords in namespace declarations.</li>
+			<li>stjs.ns() statements were not generated when the annotation was placed on Enums.</li>
+			<li>Changed the approach on how to do a proper stjs.extend again. We now use an initializer function instead of two initializer object. The new way is more flexible, and looks cleaner too.</li>
+			<li>Discovered a problem when a static field is initialized with the value of another static field in the same class.</li>
+			<li>skip package-info.java when processing</li>
+			<li>fix namespace declaration with extends</li>
+			<li>finished to packaging of jar and war and added maven integration tests for that</li>
+			<li>fix bug: empty constructor does not call super constructor</li>
+			<li>added the copy-js plugin goal that copies the resources to the war file</li>
+			<li>added the possibility to pack files in one big file containing all project's js files (correctly ordered)</li>
+			<li>put the note you need at least java 6 in the documentation (as per issue #3)</li>
+			<li>no longer generate == for x.equals(y), but leave it as is. Added equals only for basic types: Number, String and Boolean.</li>
+			<li>Add the equals(Object) method to all stjs base classes that do not override it. This allows .equals() in Java to be translated to .equals() in JavaScript without causing trouble.</li>
+			<li>Rolled by the changes that generates "===" and "!==" as a translation for "==" and "!=". This is not backwards compatible, and causes all sorts of problems due to the fact that "undefined == null" and "undefined !== null" are both true.</li>
+		</ul>
+		
+		
+
+		<h3>1.2.3 <span class="releaseDate">(18-Jul-2012)</span></h3>
+		<h5>JQuery/DOM bridge</h5>
+		<ul class="changes">
+			<li>Document inherits from Node</li>
+		</ul>
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>Added @Template annotation for future support of custom Java -> Javascript method conversion. Only @Template("none") is supported for the moment that leaves the code as-is for special methods</li>
+			<li>fix - throw exception when a dead code is detected - the .class of one or more anonymous inner classes is not found</li>
+			<li>fix equals method when using interfaces</li>
+			<li>fix maven plugin filter to include .java only</li>
+			<li>added static initializer</li>
+			<li>added minimal <a href="https://wiki.mozilla.org/DevTools/Features/SourceMap">source map</a> support</li>
+		</ul>
+		<h5>Server</h5>
+		<ul class="changes">
+			<li>fix: ArrayImpl.concat did not included the elements of this array in the resulting concatenated array</li>
+		</ul>
+
+
+
+		<h3>1.2.2 <span class="releaseDate">(18-Jul-2012)</span></h3>
+		<p>Buggy version - please ignore it</p>
+
+
+
+		<h3>1.2.1 <span class="releaseDate">(21-Mar-2012)</span></h3>
+		<h5>Test Helper</h5>
+		<ul class="changes">
+			<li>fix dependencies order</li>
+			<li>more style test console</li>
+			<li>added url attribute to @HtmlFixture</li>
+			<li>added the possibility to refer stjs libs (war or jar) from the unit tests. keep only absolute or url scripts in tests</li>
+		</ul>
+		<h5>JQuery/DOM bridge</h5>
+		<ul class="changes">
+			<li>added offset methods</li>
+			<li>added extends methods to GlobalJQuery, fix close stream test driver</li>
+			<li>fix jquery.ajax return type</li>
+			<li>fix Enum.valueOf, fix Element.offsetParent</li>
+		</ul>
+		<h5>Generator</h5>
+		<ul class="changes">
+			<li>throw mojo exception</li>
+			<li>check final variables used in inner loops</li>
+			<li>fix generic types with parameterized type fields</li>
+			<li>check if $maps keys are literals</li>
+		</ul>
+		<h5>General</h5>
+		<ul class="changes">
+			<li>added jetty:run for examples</li>
+		</ul>
+
+
+
+		<h3>1.2.0 <span class="releaseDate">(15-Jan-2012)</span></h3>
+		<ul class="changes">
+			<li>improve test helper performance</li>
+			<li>improve parseJSON performance</li>
+			<li>add Javascript compatibility functions for Strings and Numbers.
+				Array.indexOf (inexistent in IE7 was left out because of potential problems with existing code that iterates on arrays that may break)</li>
+			<li>improve Eclipse integration - better error reporting</li>
+			<li>add automatically hasOwnProperty for array iterations</li>
+			<li>add namespacing - @Namespace annotation</li>
+			<li>change return type of jQuery.attr to Object instead of String</li>
+			<li>added @SyntheticType annotation (instead of @DataType) and handle annotated types better</li>
+			<li>added $js(javascriptCode) to output directly a Javascript code</li>
+			<li>fix ClassUtils NPE (thank you &ouml;zhan)</li>
+			<li>improved jQuery API to be able to build jQuery widgets using ST-JS (example coming soon)</li>
+		</ul>
+
+
+
+		<h3>1.1.4 <span class="releaseDate">(13-Dec-2011)</span></h3>
+		<ul class="changes">
+			<li>added verification that parent classes don't contain the same fields/methods</li>
+			<li>fix vararg method with null bug</li>
+			<li>changed some jQuery callbacks from Runnable to Callback1 (using THIS parameter)</li>
+			<li>added "type-safe" JSON parsing</li>
+			<li>added Javascript function annotation to mark interfaces that should be treated as Javascript functions</li>
+			<li>added Mockjax support, improve test helper</li>
+			<li>changed jQuery core interface name to JQueryCore and use JQuery for the jQuery core and the plugins together</li>
+			<li>for Javascript compatibility, <b>changed Array iterators to String instead of integer</b></li>
+			<li>for Javascript compatibility, <b>map keys forced to string</b></li>
+			<li>clear BCEL cache in the Maven plugin to correctly handle anonymous classes</li>
+		</ul>
+		
+		
+
+		<h3>1.1.3 <span class="releaseDate">(24-Nov-2011)</span></h3>
+		<ul class="changes">
+			<li>added Jackson deserializers for map, array and date</li>
+			<li>fixed anonymous type resolution</li>
+			<li>changed Maven groupId from <b>org.stjs</b> to <b>org.st-js</b> to comply with Maven central repository requirements</li>
+		</ul>
+		
+		
+		
+		<h3>1.1.2 <span class="releaseDate">(10-Nov-2011)</span></h3>
+		<ul class="changes">
+			<li>added GSON serializers/deserializers and Jackson serializers for map, array and date</li>
+			<li>moved the array and map initializers for both client and server in the shared artifact</li>
+			<li>added Console object</li>
+			<li>added DOM events</li>
+		</ul>
+		
+		
+		
+		<h3>1.1.1 <span class="releaseDate">(7-Nov-2011)</span></h3>
+		<ul class="changes">
+			<li>added $prototype, $constructor, $castArray</li>
+			<li>forbid usage of Java arrays</li>
+			<li>change all callbacks to use the CallbackN classes (removed Runnable, AjaxHandler)</li>
+			<li>add sources to maven repository</li>
+		</ul>
+		
+		
+		
+		<h3>1.1.0 <span class="releaseDate">(1-Nov-2011)</span></h3>
+		<ul class="changes">
+			<li>include a test helper</li>
+			<li>major refactoring of the type resolution module</li>
+			<li>split the Javascript library in 4 parts: base, shared, server and jQuery</li>
+		</ul>
+
+		<h3>1.0.0 <span class="releaseDate">(11-Oct-2011)</span></h3>
+		<p>Initial release</p>
+	</div>
+
+<a href="https://github.com/st-js/st-js/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
