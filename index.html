@@ -31,11 +31,11 @@ title: Strongly Typed JavaScript
 	<div class="prefix_1 grid_5">
 		<p class="code java">
 			<span class="title">Example source code (Java)</span><br><br>
-			<span class="type">StockData</span> <span class="variable">stockData</span> = <span class="keyword">new</span> <span class="type">StockData</span>() {{<br>
+			<span class="type">StockData</span> <span class="variable">stockData</span> = <span class="keyword">new</span> <span class="type">StockData</span>() { {<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">last</span> = <span class="litteral">10.0</span>;<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">close</span> = <span class="litteral">2.0</span>;<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">stock</span> = <span class="litteral">"ABC"</span>;<br>
-			}};<br>
+			} };<br>
 			<span class="function">$</span>(<span class="variable">that</span>.<span class="function">row</span>(<span class="variable">stockData</span>)).<span class="function">appendTo</span>(<span class="litteral">"table tbody"</span>);<br>
 			<span class="variable">that</span>.<span class="variable">stocks</span>.<span class="function">push</span>(<span class="variable">stockData</span>.<span class="variable">stock</span>);
 		</p>
