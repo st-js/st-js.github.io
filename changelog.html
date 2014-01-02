@@ -12,8 +12,32 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
-		
-		
+		<h3>2.1.0 <span class="releaseDate">(02-Jan-2014)</span></h3>
+		<p>The main functionality delivered in the version is the possiblity to have overloaded methods and constructors, not only in bridges but also in regular classes.
+		The implementation is similar to the one in TypeScript, and it sticks to our philosophy to stay as close as possible to JavaScript synthax and capabilities.
+		So only one constructor or overloaded method with the same name can have a body. The other less generic versions are marked with the keywork native or with the annotation @Native 
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Added the possibility to overload methods (by only having a single non-native method, that's the most generic)</li>
+			<li>Added overload for constructors</li>
+			<li>Moved many classes/fields/methods from the HTML bridge that actually belong to the JavaScript language itself.</li>
+			<li>Moved isNaN from the HTML bridge to JSGlobal</li>
+			<li>Added some important constructor methods to JSGlobal. These are useful for doing type conversions in JS.</li>
+			<li>Added a set of Abstract operations as defined in the ECMA-262 spec, which will help us implement the correct JS compatible behavior in Java.</li>
+			<li>Added the Constructor functions to the Global object. People can now use Array(2) to create a new empty array of size 2.</li>
+			<li>fix issue #22 - added the prefix template.</li>
+			<li>fix and clean the global scope</li>
+			<li>fix issue #27 - the usage of JDK instead of JRE</li>
+			<li>fix issue #29 - hexadecimal literals</li>
+			<li>fix issue #33 - integer divide and assign</li>
+			<li>fix issue #34 - usage of xor operator</li>
+			<li>fix #32 - default value for primitive types</li>
+			<li>fix varargs type resolution, type variable method resolution</li>
+			<li>forbid @GlobalScope innerType, fix numeral literals</li>
+		</ul>
+	</p>
 		<h3>2.0.0 <span class="releaseDate">(06-Oct-2013)</span></h3> 
 		<p>
 		Starting with this release the bridges are no longer in the main repository. They will have they own independent releases, linked to the release

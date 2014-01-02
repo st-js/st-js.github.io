@@ -494,6 +494,44 @@ App = function(a){
 			</div>
 			<div class="clear"></div>
 
+<!-- ---------- -->
+	<h4>@Native</h4>
+			<p>This annotation is used to mark the constructors that are less generic when you need to overload the constructors of a class.
+			The effect of using this annotation on a constructor or even a method is that the code of the given constructor/method is not generated as all.
+			When you need to overload constructors, ST-JS checks that only ONE constructors has a body and all the others are marked with @Native. Also, the constructor that
+			has the most generic signature should be left without @Native.
+			</p>
+			
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Java (declaration)
+
+public class MyClass {
+	@Native
+    public MyClass(){
+    }
+    @Native
+    public MyClass(int p1){
+    }
+    public MyClass(Integer p1, Integer p2){
+    	//do something here
+    }
+}
+
+</pre>
+			</div>
+			<div class="grid_5 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript (declaration)
+
+var MyClass = function(p1, p2){}; //only this constructor is generated!
+stjs.extend(MyClass, null, [],
+        function(constructor, prototype){
+}, {});
+
+</pre>
+			</div>
+			<div class="clear"></div>
 		
 				<!-- ------------------------  -->
 			<h4>STJS helper</h4>
