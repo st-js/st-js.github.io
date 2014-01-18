@@ -12,6 +12,21 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
+		
+		<h3>3.0.0 <span class="releaseDate">(15-Jan-2014)</span></h3>
+		<p>This new major version brings the support for Java8, allowing you to use the long expected lambda expressions. Also the method references simplify greatly the development and make 
+		the code even closer to the generated JavaScript code. To use these new functionalities, you simply have to compile your project with a JDK 8. ST-JS uses the right parser for the desired Java version.
+		<br>To achieve this, the generator was completely re-written and uses the Java compiler's AST features. Now it's also simpler to extend the generator via the @UsePlugin annotation.
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Support Java8</li>
+			<li>Generator plugins</li>
+			<li>@UsePlugin annotation</li>
+		</ul>
+	</p>
+		
 		<h3>2.1.0 <span class="releaseDate">(02-Jan-2014)</span></h3>
 		<p>The main functionality delivered in the version is the possibility to have overloaded methods and constructors, not only in bridges but also in regular classes.
 		The implementation is similar to the one in TypeScript, and it sticks to our philosophy to stay as close as possible to JavaScript syntax and capabilities.
