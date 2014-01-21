@@ -1,26 +1,7 @@
-<html>
-<head>
-	<title>ST-JS: Borrowing Java's syntax to write type-safe JavaScript</title>
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu Mono:regular,bold&subset=Latin">
-	<link rel="stylesheet" type="text/css" href="reset.css">
-	<link rel="stylesheet" type="text/css" href="index.css">
-	<link rel="stylesheet" type="text/css" href="960.css" />
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-26575460-1']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script>
-</head>
-<body>
+---
+layout: base
+title: Strongly Typed JavaScript
+---
 
 <div class="topHighlight">
 <div class="container_12">
@@ -50,11 +31,11 @@
 	<div class="prefix_1 grid_5">
 		<p class="code java">
 			<span class="title">Example source code (Java)</span><br><br>
-			<span class="type">StockData</span> <span class="variable">stockData</span> = <span class="keyword">new</span> <span class="type">StockData</span>() {{<br>
+			<span class="type">StockData</span> <span class="variable">stockData</span> = <span class="keyword">new</span> <span class="type">StockData</span>() { {<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">last</span> = <span class="litteral">10.0</span>;<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">close</span> = <span class="litteral">2.0</span>;<br>
 			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">stock</span> = <span class="litteral">"ABC"</span>;<br>
-			}};<br>
+			} };<br>
 			<span class="function">$</span>(<span class="variable">that</span>.<span class="function">row</span>(<span class="variable">stockData</span>)).<span class="function">appendTo</span>(<span class="litteral">"table tbody"</span>);<br>
 			<span class="variable">that</span>.<span class="variable">stocks</span>.<span class="function">push</span>(<span class="variable">stockData</span>.<span class="variable">stock</span>);
 		</p>
@@ -107,21 +88,6 @@
 		Using existing JavaScript libraries becomes easier by using ST-JS bridges which give you hints about the types of all parameters and return types.
 	</div>
 
-	<div class="grid_12 messagesHeader">
-		<h2>News</h2>
-	</div>
-	<div class="prefix_1 grid_12 conference">			
-		<div>
-		ST-JS is present at <a href="http://jazoon.com"><img src="http://jazoon.com/wp-content/uploads/2013/06/jazoon-footer-logo.png"></a> Zurich, 22nd Oct 2013
-		</div>
-		
-		<div>
-			ST-JS is present at <a href="http://soft-shake.ch/"><img src="http://soft-shake.ch/images/logo_softshake.png"></a> Geneva, 25th Oct 2013
-		</div>	
-	</div>
+	
 </div>
 
-
-<a href="https://github.com/st-js/st-js/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
