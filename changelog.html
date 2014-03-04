@@ -12,7 +12,22 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
-		
+		<h3>3.0.1 <span class="releaseDate">(09-Feb-2014)</span></h3>
+		<p>This is a minor bug fixed related to the refactoring done in the previous version.
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>fix #42 - add Array.$forEach method to avoid clash in Java 8 with Iterable.forEach</li>
+			<li>put back check access to forbidden classes</li>
+			<li>fix #43 - using stjs and annotation processors</li>
+			<li>fix #41 build with Java 7</li>
+			<li>fix #40 - java 8 build (but without findbugs)</li>
+			<li>fix #36 - allow @Native on methods too</li>
+			<li>fix #39, non-jar files found in the classpath of the compiled project</li>
+		</ul>
+	</p>
+	
 		<h3>3.0.0 <span class="releaseDate">(15-Jan-2014)</span></h3>
 		<p>This new major version brings the support for Java8, allowing you to use the long expected lambda expressions. Also the method references simplify greatly the development and make 
 		the code even closer to the generated JavaScript code. To use these new functionalities, you simply have to compile your project with a JDK 8. ST-JS uses the right parser for the desired Java version.
