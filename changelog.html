@@ -11,6 +11,33 @@ title: Changelog
 			<li>add support for Google Closure compiler (or build a similar tool based on Java obfuscation tools)</li>
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
+		<h3>3.0.3 <span class="releaseDate">(17-Aug-2014)</span></h3>
+		<p>This is mainly a bug fix version notably for the source map part.
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>added stjs-ext to be able to typefy and stringify POJOs based on type description</li>
+			<li>fix source maps</li>
+			<li>fix wildcard type name</li>
+			<li>upgrade guava lib</li>			
+		</ul>
+		</p>
+		
+		<h3>3.0.2 <span class="releaseDate">(02-Jul-2014)</span></h3>
+		<p>This is a mainly a bug fix version.
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>fix NPE in loops (with cast) and wrong check message with classes extending exceptions (java 7 only)</li>
+			<li>fix ClassCastException when using anounymous interfaces within static initializers</li>
+			<li>fix Parsing of firefox' stacktrace</li>
+			<li>allow to use the GeneratorTestHelper for unit tests in arbitrary packages</li>		
+			<li>fix run command-line test on linux, fix order of pack files for global classes, source map packing</li>
+			<li>Fix NullPointerException when jar file don't have manifest.</li>	
+		</ul>
+		</p>
 		
 		<h3>3.0.1 <span class="releaseDate">(09-Feb-2014)</span></h3>
 		<p>This is a minor bug fixed related to the refactoring done in the previous version.
