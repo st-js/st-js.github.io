@@ -3,14 +3,19 @@ layout: default
 title: Tutorial
 ---
 
-		<p>This tutorial explains you how to build a "Hello World" application using STJS. We presume you have previous knowledge of Maven, Java, JavaScript and HTML.
-		Additionally you'll have to deploy the generated war file to your preferred servlet engine. Even though Java is used to generate the JavaScript, for this particular
-		example, as no interaction with the server is made, no Java code is run! So you can also take the content of the war file and deploy it to an Apache server, for example,
-		and it will work!</p>
+		<p>This tutorial explains you how to build a "Hello World"
+			application using ST-JS. We presume you have previous knowledge of
+			Maven, Java, JavaScript and HTML. Additionally, you'll have to deploy
+			the generated war file to your preferred servlet engine. Even though
+			Java is used to generate the JavaScript, for this particular example
+			no Java code is run, as no interaction with the server is made. So
+			you can also take the content of the war file and deploy it to an
+			Apache server, for example, and it will work!
+		</p>
 		<p>If you're too busy to follow the steps, you can find this tutorial also here: <a href="https://github.com/st-js/bridges-examples/tree/master/html-hello">https://github.com/st-js/bridges-examples/tree/master/html-hello</a>.
 		</p>
 		<p>
-		So here are the steps to create a new, very simple application, with STJS:</p>
+		So here are the steps to create a new, very simple application, with ST-JS:</p>
 
 		<ol class="tutorial">
 			<li>Create a new empty POM file for a war project
@@ -19,7 +24,8 @@ title: Tutorial
         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-        &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
     &lt;groupId&gt;org.st-js&lt;/groupId&gt;
     &lt;artifactId&gt;hello&lt;/artifactId&gt;
@@ -33,7 +39,7 @@ title: Tutorial
 
 
 
-			<li>Add the <i>stjs.version</i> property - easier to have the same version between the different STJS artifacts
+			<li>Add the <i>stjs.version</i> property - easier to have the same version between the different ST-JS artifacts
 <pre class="code prettyprint lang-xml">
 &lt;properties&gt;
     &lt;stjs.version&gt;3.0.3&lt;/stjs.version&gt;
@@ -41,24 +47,25 @@ title: Tutorial
 </pre>
 			</li>
 
-			<li>Set the Java version to a version superior to 1.5
+			<li>Point the build to the actual source folder containing the Java source files to compile to JavaScript and set the Java version to a version superior to 1.5
 <pre class="code prettyprint lang-xml">
 &lt;build&gt;
+    &lt;sourceDirectory&gt;src/main/java&lt;/sourceDirectory&gt;
     &lt;plugins&gt;
-    &lt;plugin&gt;
-        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-        &lt;configuration&gt;
-        &lt;source&gt;1.6&lt;/source&gt;
-        &lt;target&gt;1.6&lt;/target&gt;
-        &lt;/configuration&gt;
-    &lt;/plugin&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;1.6&lt;/source&gt;
+                &lt;target&gt;1.6&lt;/target&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
     &lt;/plugins&gt;
 &lt;/build&gt;
 </pre>
 		</li>
 
-			<li>Add the dependency to the STJS JavaScript (basic and DOM) bridge library
+			<li>Add the dependency to the ST-JS JavaScript (basic and DOM) bridge library
 <pre class="code prettyprint lang-xml">
 &lt;dependency&gt;
     &lt;groupId&gt;org.st-js.bridge&lt;/groupId&gt;
@@ -68,7 +75,7 @@ title: Tutorial
 </pre>
 			</li>
 
-			<li>Add the STJS plugin that will generate the JavaScript code (inside the build/plugins section)
+			<li>Add the ST-JS plugin that will generate the JavaScript code (inside the build/plugins section)
 <pre class="code prettyprint lang-xml">
 &lt;plugin&gt;
     &lt;groupId&gt;org.st-js&lt;/groupId&gt;
@@ -90,10 +97,12 @@ title: Tutorial
 <pre class="code prettyprint lang-html">
 &lt;html&gt;
 &lt;body&gt;
-&lt;h1&gt;ST-JS example &t; Hello world&lt;/h1&gt;
-&lt;form id=&quot;form&quot;&gt;
-Say hello to: &lt;input type=&quot;text&quot; name=&quot;to&quot;&gt; &lt;input type=&quot;button&quot; name=&quot;say&quot; value=&quot;Go&quot;&gt;
-&lt;/form&gt;
+
+    &lt;h1&gt;ST-JS example: Hello world&lt;/h1&gt;
+
+    &lt;form id=&quot;form&quot;&gt;
+        Say hello to: &lt;input type=&quot;text&quot; name=&quot;to&quot;&gt; &lt;input type=&quot;button&quot; name=&quot;say&quot; value=&quot;Go&quot;&gt;
+    &lt;/form&gt;
 
 &lt;/body&gt;
 &lt;/html&gt;
@@ -132,7 +141,7 @@ button.onclick = new Function1&lt;DOMEvent, Boolean&gt;() {
 </pre>
 </li>
 
-		<li>Include the generated JavaScript and the STJS support file in the page
+		<li>Include the generated JavaScript and the ST-JS support file in the page
 <pre class="code prettyprint lang-html">
 &lt;head&gt;
     &lt;script src=&quot;generated-js/stjs.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
@@ -160,43 +169,44 @@ button.onclick = new Function1&lt;DOMEvent, Boolean&gt;() {
 		</li>
 	</ol>
 
+	<!-- This code cannot be found there!!
 	<p>
-	You can also find this example (together with other, mode advanced examples) included in the STJS downloadable archive. Go to our <a href="download.html">download section</a> for details.
+	You can also find this example (together with other, mode advanced examples) included in the ST-JS downloadable archive. Go to our <a href="download.html">download section</a> for details.
 	</p>
+	 -->
 
 	<p>*) The generated JavaScript code:</p>
 <pre class="code prettyprint lang-javascript">
 var HelloWorld = function(){};
 stjs.extend(HelloWorld, null, [], function(constructor, prototype){
-constructor.main = function(args) {
-    window.onload = function(ev) {
-    var form = window.document.forms[0];
-    var button = form.elements["say"];
-    var text = form.elements["to"];
-    button.onclick = function(ev) {
-        alert("Hello " + text.value);
-        return true;
+    constructor.main = function(args) {
+        window.onload = function(ev) {
+            var form = window.document.forms[0];
+            var button = form.elements["say"];
+            var text = form.elements["to"];
+            button.onclick = function(ev) {
+                alert("Hello " + text.value);
+                return true;
+            };
+        };
     };
-    };
-};
 }, {});
 
 if (!stjs.mainCallDisabled) HelloWorld.main();
 </pre>
 
-	<p><a name="jetty"></a>**) Jetty configuration:</p>
+	<p><a id="jetty"></a>**) Jetty configuration:</p>
 <pre class="code prettyprint lang-xml">
 &lt;plugin&gt;
-&lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
-&lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
-&lt;configuration&gt;
-    &lt;webAppConfig&gt;
-    &lt;contextPath&gt;/stjs&lt;/contextPath&gt;
-    &lt;baseResource implementation=&quot;org.eclipse.jetty.util.resource.ResourceCollection&quot;&gt;
-        &lt;resourcesAsCSV&gt;src/main/webapp,target/${project.artifactId}-${project.version}&lt;/resourcesAsCSV&gt;
-    &lt;/baseResource&gt;
-    &lt;/webAppConfig&gt;
-&lt;/configuration&gt;
+    &lt;groupId&gt;org.mortbay.jetty&lt;/groupId&gt;
+    &lt;artifactId&gt;jetty-maven-plugin&lt;/artifactId&gt;
+    &lt;configuration&gt;
+        &lt;webAppConfig&gt;
+        &lt;contextPath&gt;/stjs&lt;/contextPath&gt;
+        &lt;baseResource implementation=&quot;org.eclipse.jetty.util.resource.ResourceCollection&quot;&gt;
+            &lt;resourcesAsCSV&gt;src/main/webapp,target/${project.artifactId}-${project.version}&lt;/resourcesAsCSV&gt;
+        &lt;/baseResource&gt;
+        &lt;/webAppConfig&gt;
+    &lt;/configuration&gt;
 &lt;/plugin&gt;
 </pre>
-
