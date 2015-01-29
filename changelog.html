@@ -11,6 +11,53 @@ title: Changelog
 			<li>add support for Google Closure compiler (or build a similar tool based on Java obfuscation tools)</li>
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
+		
+		<h3>3.1.3 <span class="releaseDate">(29-Jan-2015)</span></h3>
+		<p>This release brings a lot of improvements in various areas, including: Better support for Java 8 Lambdas and method 
+		references, client-side support for Java annotations, improved control on generated code leading to 
+		better JS library bridging, better sourcemap support, etc...
+		</p>
+		<p>
+		Versions 3.1.0 through 3.1.2 were private unstable versions.
+		</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Added the @ServerSide annotation to be able to have server-side only code</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/52">issue #52</a>: Access to outer scope from lambdas</li>
+			<li>Lambdas and method references are now allowed to access the containing object instance as "this".</li>
+			<li>Introduced support @Template annotations for fields (useful to build better bridges for some libraries)</li>
+			<li>Pass Java annotations on to the generated code</li>
+			<li>Fixed sourcemaps for packed files</li>
+			<li>Added the "suffix" template</li>
+			<li>@Template now supports simple parameters. This allows declarations like <tt>@Template("suffix(Return)") void thenReturn()</tt> to be used to generate <tt>then()</tt>. This is used in the RSVP/Promises bridge.</li>
+			<li>@Namespace is now support at the package level, and applied recursively to all sub-packages.</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/59">issue #59</a>: ST-JS Interfaces are not compatible with JsMockito</li>
+		</ul>
+		</p>
+		<h5>Maven plugin</h5>
+		<p>
+		<ul class="changes">
+			<li>Renamed the maven plugin artifact to "stjs-maven-plugin" from "maven-plugin". This means that it is now possible to easily invoke STJS goals from the command line. For example: `mvn compile stjs:generate`</li>
+			<li>Better, less retrictive cyclical dependencies check when using the &lt;pack&gt;true&lt;/pack&gt; configuration option.</li>
+			<li>Fix <a href="https://github.com/st-js/st-js/issues/54">issue #54</a>: do not count @stjsBridge classes in the generation </li>
+		</ul>
+		</p>
+		<h5>Runtime</h5>
+		<p>
+		<ul class="changes">
+			<li>Support reading Java source code annotations at JavaScript runtime using the new STJS.get*Annotation() methods</li>
+			<li>Introduced stjs.bind() which is used to provide support for lambdas and method references.</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/51">issue #51:</a> integer divisions for large numbers returned wrong results.</li>
+		</ul>
+		</p>
+		<h5>Test Helper</h5>
+		<ul class="changes">
+			<li>Use browser caching as often as possible to speed up unit test execution.</li>
+			<li>Better error handling and messages</li>
+			<li>Fixed issues with HEAD requests freezing unit tests</li>
+		</ul>
+		
 		<h3>3.0.3 <span class="releaseDate">(17-Aug-2014)</span></h3>
 		<p>This is mainly a bug fix version notably for the source map part.
 		</p>
