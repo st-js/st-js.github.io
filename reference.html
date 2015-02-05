@@ -336,8 +336,8 @@ Something = function(){
 				</p>
 
 			<h4>@Adapter</h4>
-			<p>The static methods in the annotated are marked as being members of another
-				existing JavaScript type. This scope of this annotation is rather narrow,
+			<p>The static methods in the annotated type are marked as being members of another
+				existing JavaScript type. The scope of this annotation is rather narrow,
 				and is used by ST-JS to make it possible to use all the methods that the
 				JavaScript standard library defines for types analog to those in the
 				java.lang package, such as Number(and its subclasses), String, Object,
@@ -497,8 +497,8 @@ App = function(a){
 <!-- ---------- -->
 	<h4>@Native</h4>
 			<p>This annotation is used to mark the constructors that are less generic when you need to overload the constructors of a class.
-			The effect of using this annotation on a constructor or even a method is that the code of the given constructor/method is not generated as all.
-			When you need to overload constructors, ST-JS checks that only ONE constructors has a body and all the others are marked with @Native. Also, the constructor that
+			The effect of using this annotation on a constructor or even a method is that the code of the given constructor/method is not generated at all.
+			When you need to overload constructors, ST-JS checks that only ONE constructor has a body and all the others are marked with @Native. Also, the constructor that
 			has the most generic signature should be left without @Native.
 			</p>
 			
@@ -799,7 +799,7 @@ public class TestMyStuff {
 
 			<h4>Customizing the way the unit tests run</h4>
 			<p>In order to run your unit tests in a browser, the STJS Junit runner builds an HTML page
-				that includes all the necessary HTML and javascript necessary to execute your tests and
+				that includes all the necessary HTML and javascript to execute your tests and
 				return the result to JUnit. By default, the HTML page that is sent to the browser
 				includes the following things:</p>
 			<ul>
@@ -1089,7 +1089,7 @@ public class TestHelloWorld {
 				</tr>
 			</table>
 
-	<h3><a id="graddle">Graddle Plugin</a></h3>
-	<p>Thanks to <a href="https://github.com/dzwicker">Daniel</a> you can now use ST-JS also with Graddle.
+	<h3><a id="gradle">Gradle Plugin</a></h3>
+	<p>Thanks to <a href="https://github.com/dzwicker">Daniel</a> you can now use ST-JS also with Gradle.
 	You can find the plugin's sources <a href="https://github.com/dzwicker/st-js-gradle-plugin">here</a>.
 	</p>
