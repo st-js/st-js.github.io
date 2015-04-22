@@ -12,6 +12,36 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
+		<h3>3.1.4 <span class="releaseDate">(22-Apr-2015)</span></h3>
+		<p>This release brings bug fixes and small features</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/62">issue #62</a>: @Namespace is ignored on fully qualified static method calls</li>
+			<li>Added support for emberjs-style properties via the new @Template("gproperty")</li>
+		</ul>
+		</p>
+		<h5>Maven plugin</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/68">issue #68</a>: Specifying a generatedSourcesDirectory to create a webjar fails the test</li>
+			<li>Added an &lt;includeStjsSupportFile&gt; configuration option, to be able to make webjars that don't include stjs.js</li>
+		</ul>
+		</p>
+		<h5>Runtime</h5>
+		<p>
+		<ul class="changes">
+			<li>Small fixes to the runtime support (stjs.js) so that it is better handled by naive minifiers</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/74">issue #74</a>: stjs.typefy() method doesn't works good in IE8</li>
+		</ul>
+		</p>
+		<h5>Test Helper</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/64">issue #64</a>: assertNotNull(undefined) is accepted</li>
+		</ul>
+		</p>
+		
 		<h3>3.1.3 <span class="releaseDate">(29-Jan-2015)</span></h3>
 		<p>This release brings a lot of improvements in various areas, including: Better support for Java 8 Lambdas and method 
 		references, client-side support for Java annotations, improved control on generated code leading to 
