@@ -132,11 +132,9 @@ window.onload = new Callback1&lt;DOMEvent&gt;() {
 Form form = window.document.forms.$get(0);
 Element button = form.elements.$get("say");
 final Input text = form.elements.$get("to");
-button.onclick = new Function1&lt;DOMEvent, Boolean&gt;() {
-    public Boolean $invoke(DOMEvent ev) {
-        alert("Hello " + text.value);
-        return true;
-    }
+button.onclick = (ev) -> {
+    alert("Hello " + text.value);
+    return true;
 };
 </pre>
 </li>

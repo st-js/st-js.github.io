@@ -168,10 +168,8 @@ public interface EventHandler {
 public class Something {
     public Something(Event event){
         // defining a new anonymous implementation
-        EventHandler handler = new EventHandler() {
-            public boolean onEvent(Event evt){
-                console.print(evt.name);
-            }
+        EventHandler handler = (evt) -> {
+			console.print(evt.name);
         };
 
         // calling the single-method
@@ -192,14 +190,13 @@ public class Something {
 Something = function(event){
     // translated as an anonymous function
     var handler = function(evt) {
-
         console.print(evt.name);
-
     };
 
     // invoke the function directly
     handler(event);
 }
+
 </pre>
 			</div>
 			<div class="clear"></div>
@@ -262,6 +259,7 @@ public class Something {
 Something = new function(){
     $(".hello").addClass(".world");
 }
+
 </pre>
 			</div>
 			<div class="clear"></div>
@@ -396,6 +394,7 @@ public class Something {
 Something = function(val){
     var fixed = val.toFixed(2);
 }
+
 </pre>
 			</div>
 			<div class="clear"></div>
@@ -409,21 +408,21 @@ Something = function(val){
 				object[i].
 				The current list of templates:
 				<pre>
-adapter=org.stjs.generator.writer.template.AdapterTemplate
-assert=org.stjs.generator.writer.template.AssertTemplate
-array=org.stjs.generator.writer.template.ArrayTemplate
-delete=org.stjs.generator.writer.template.DeleteTemplate
-get=org.stjs.generator.writer.template.GetTemplate
-invoke=org.stjs.generator.writer.template.InvokeTemplate
-js=org.stjs.generator.writer.template.JsTemplate
-map=org.stjs.generator.writer.template.MapTemplate
-toProperty=org.stjs.generator.writer.template.MethodToPropertyTemplate
-none=org.stjs.generator.writer.template.NoneTemplate
-or=org.stjs.generator.writer.template.OrTemplate
-properties=org.stjs.generator.writer.template.PropertiesTemplate
-put=org.stjs.generator.writer.template.PutTemplate
-set=org.stjs.generator.writer.template.SetTemplate
-typeOf=org.stjs.generator.writer.template.TypeOfTemplate
+adapter    = org.stjs.generator.writer.template.AdapterTemplate
+assert     = org.stjs.generator.writer.template.AssertTemplate
+array      = org.stjs.generator.writer.template.ArrayTemplate
+delete     = org.stjs.generator.writer.template.DeleteTemplate
+get        = org.stjs.generator.writer.template.GetTemplate
+invoke     = org.stjs.generator.writer.template.InvokeTemplate
+js         = org.stjs.generator.writer.template.JsTemplate
+map        = org.stjs.generator.writer.template.MapTemplate
+toProperty = org.stjs.generator.writer.template.MethodToPropertyTemplate
+none       = org.stjs.generator.writer.template.NoneTemplate
+or         = org.stjs.generator.writer.template.OrTemplate
+properties = org.stjs.generator.writer.template.PropertiesTemplate
+put        = org.stjs.generator.writer.template.PutTemplate
+set        = org.stjs.generator.writer.template.SetTemplate
+typeOf     = org.stjs.generator.writer.template.TypeOfTemplate
 </pre>				 
 			</p>
 
@@ -478,6 +477,7 @@ public class App {
 // JavaScript source (bridged lib)
 var A = {
 
+
     field : null,
 
 
@@ -486,10 +486,12 @@ var A = {
 
 // Generated JavaScript application code (usage)
 
+
 App = function(a){
     a.field = 42;
     var b = a.field;
 }
+
 </pre>
 			</div>
 			<div class="clear"></div>

@@ -207,14 +207,13 @@ title: FAQ
 <pre class="code prettyprint lang-java">
 // Java
 
-$("#form").submit(new EventHandler() {
-  public void onEvent(Event ev, Element THIS) {
-    StockData stockData =
+$("#form").submit((ev, THIS) -> {
+  StockData stockData =
       that.updateStock($("#newStock").val());
-    $(that.row(stockData)).appendTo("table tbody");
-    that.stocks.push(stockData.stock);
-  }
-});</pre>
+  $(that.row(stockData)).appendTo("table tbody");
+  that.stocks.push(stockData.stock);
+});
+</pre>
 			</div>
 
 			<div class="grid_5 omega">
@@ -222,12 +221,10 @@ $("#form").submit(new EventHandler() {
 // Generated JavaScript
 
 $("#form").submit(function(ev) {
-
   var stockData =
-    that.updateStock($("#newStock").val());
+      that.updateStock($("#newStock").val());
   $(that.row(stockData)).appendTo("table tbody");
   that.stocks.push(stockData.stock);
-
 });
 </pre>
 			</div>
@@ -346,13 +343,11 @@ for(int i = 0; i &lt; array.$length(); i ++){
     console.info(i + " : " + array.$get(i));
 }
 
-// looping with for-in
-for(String i : array){
-
-
-
-    console.info(i + " : " + array.$get(i));
-}</pre>
+// looping with forEach
+array.forEach((el, i, arr) ->
+	console.info(i + " : " + arr.$get(i))
+);
+</pre>
 		</div>
 
 			<div class="grid_5 omega">
@@ -368,12 +363,9 @@ for(var i = 0; i &lt; array.length; i ++){
     console.info(i + " : " + array[i]);
 }
 
-// looping with for-in
-for(var i : array){
-    if(array.hasOwnProperty(i)){
-        continue;
-    }
-    console.info(i + " : " + array[i]);
+// looping with forEach
+array.forEach(function(el, i, arr){
+    console.info(i + " : " + arr[i]);
 }
 </pre>
 			</div>
