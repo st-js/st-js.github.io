@@ -12,6 +12,52 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
+		<h3>3.2.0 <span class="releaseDate">(07-AUG-2015)</span></h3>
+		<p>This release brings bug fixes and small features</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/66">issue #66</a>: The code for inner classes annotated with @STJSBridge is no longer generated</li>
+			<li>Source mapping comment switched from //# to the more recent //@</li>
+		</ul>
+		</p>
+		<h5>Maven plugin</h5>
+		<p>
+		<ul class="changes">
+			<li>Official support for building webjars. Just add &lt;webjar&gt;true&lt;/webjar&gt; to your st-js maven plugin configuration</li>
+		</ul>
+		</p>
+		<h5>Runtime</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/83">issue #83</a>: String.contains() now works correctly</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/75">issue #75</a>: deprecate STJS.typefy() in favor of STJS.hydrate() which is more standard</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/95">issue #95</a>: Object.getClass() now works as expected</li>
+		</ul>
+		</p>
+		<h5>Test Helper</h5>
+		<p>
+		<ul class="changes">
+			<li>Dependencies on libraries/bridges using webjars are automatically resolved and included in test cases. Those libraries can be removed from your @ScriptsBefore and @ScriptsAfter annotations</li>
+		</ul>
+		</p>
+		<h5>Bridges</h5>
+		<p>
+		<ul class="changes">	
+			<li>The scripts defined in @ScriptsAfter, @ScriptsBefore of a parent test class are now inherited by subclasses</li>
+			<li>Unit tests execute much faster on large projects. Improvements up to 8x have been measured on real codebases.</li>
+			<li>All methods of Array and Date are now fully documented. Giving you instant access to the documentation from your IDE.</li>
+			<li>Bridges can now depend on webjars. The dependency to .js files that are in webjars can be specified like this: @STJSBridge(sources = {"webjar:/rsvp.js"})</li>
+		</ul>
+		</p>	
+		<h5>Server</h5>
+		<p>
+		<ul class="changes">	
+			<li>Complete re-write of the Array implementation. It now behaves as close as possible to the ECMA-262 specification. If you are sharing some code between your server-side and client-side, this should greatly improve the compatibility of that code.</li>
+			<li>JSON serialization for sparse arrays now throws a clear exception. (JSON does not support sparse arrays, but the new Array implementation does)</li>
+		</ul>
+		</p>
+		
 		<h3>3.1.5 <span class="releaseDate">(07-Jul-2015)</span></h3>
 		<p>This release brings major performance improvements for the JUnit test runner, as well as a couple of bug fixes and small features</p>
 		<h5>Generator</h5>
