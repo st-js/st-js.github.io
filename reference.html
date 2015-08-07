@@ -719,8 +719,12 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 				<li><b>pack</b> - if true, a single JavaScript will be created
 					containing all the generated JavaScript files in a correct order
 					(follows the dependencies)</li>
-				<li><b>generateSourceMap</b> - if true, sourcemaps that allow you to see the original Java sources in the browser instead of th
-				generated JavaScript files</li>
+				<li><b>generateSourceMap</b> - if true, sourcemaps that allow you to see the 
+					original Java sources in the browser instead of the generated 
+					JavaScript files</li>
+				<li><b>webjar</b> - if true and the pom's packaging is set to jar, st-js will 
+					package the generated JavaScript in a .jar that follows the webjar
+					specification.</li>
 				<li><b>annotations</b> - the list of annotations (only the class name) to be generated in the client</li>
 			</ul>
 
@@ -965,6 +969,14 @@ public class TestHelloWorld {
 					<td class="name">stjs.test.debug</td>
 					<td class="description">if this is true, debug information is displayed. Default
 						value is false</td>
+				</tr>
+				<tr>
+					<td class="name">stjs.test.debugJavaScript</td>
+					<td class="description">if true, JUnit tests are run in JavaScript debug mode, where ST-JS
+						gives the opportunity to the developper to manually set JS breakpoints in his browser before
+						the unit test are launched. If this property is not set, ST-JS automatically attempts to
+						detect if the JUnit tests are run from an IDE in debug mode and will activate the JavaScript
+						debug mode if that is the case. Default value is unset (ie: autodetect)</td>
 				</tr>
 				<tr>
 					<td class="name">firefox.bin</td>
