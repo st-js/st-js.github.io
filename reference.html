@@ -332,6 +332,28 @@ Something = function(){
 				is only to provide information about types, fields and methods contained
 				defined by an existing external JavaScript library to the Java tooling.
 				</p>
+			<p>The JavaScript source file that contains the actual implementation that the bridge
+				corresponds to should be specified using the sources field of @STJSBridge. By default
+				the sources location is specified as relative to the classpath. Since ST-JS 3.2.0, 
+				the sources location can be specified using a webjar: url.
+				</p>
+				
+				
+			<div class="grid_5 alpha">
+<pre class="code prettyprint language-java">
+// Classpath location
+@STJSBridge( sources = {"/path/to/js/jquery.1.11.js"} ) 
+public class WithClassPath {
+    ...
+}
+
+// Classpath location
+@STJSBridge( sources = {"webjar:/jquery.js"} ) 
+public class WithWebjar {
+    ...
+}
+</pre>
+			</div>
 
 			<h4>@Adapter</h4>
 			<p>The static methods in the annotated type are marked as being members of another
