@@ -13,12 +13,13 @@ title: Changelog
 		</ul>
 		
 		<h3>3.2.0 <span class="releaseDate">(07-AUG-2015)</span></h3>
-		<p>This release brings bug fixes and small features</p>
+		<p>This release bring several new features: Full webjar support, improved Array bridge and implementation, JavaScript debug mode in the JUnit test runne.r</p>
 		<h5>Generator</h5>
 		<p>
 		<ul class="changes">
-			<li>Fixed <a href="https://github.com/st-js/st-js/issues/66">issue #66</a>: The code for inner classes annotated with @STJSBridge is no longer generated</li>
 			<li>Source mapping comment switched from //# to the more recent //@</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/66">issue #66</a>: The code for inner classes annotated with @STJSBridge is no longer generated</li>
+			<li>Fixed <a href="https://github.com/st-js/st-js/issues/94">issue #94</a>: Allows methods annotated with @Template("toProperty") in object litterals</li>
 		</ul>
 		</p>
 		<h5>Maven plugin</h5>
@@ -48,6 +49,7 @@ title: Changelog
 			<li>Unit tests execute much faster on large projects. Improvements up to 8x have been measured on real codebases.</li>
 			<li>All methods of Array and Date are now fully documented. Giving you instant access to the documentation from your IDE.</li>
 			<li>Bridges can now depend on webjars. The dependency to .js files that are in webjars can be specified like this: @STJSBridge(sources = {"webjar:/rsvp.js"})</li>
+			<li>New JavaScript debug mode that allows the developper the opportunity to set breakpoints in his browsers before running unit tests</li>
 		</ul>
 		</p>	
 		<h5>Server</h5>
