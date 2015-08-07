@@ -12,6 +12,22 @@ title: Changelog
 			<li>add bridge to Javascript API for mobile phones</li>
 		</ul>
 		
+		<h3>3.1.5 <span class="releaseDate">(07-Jul-2015)</span></h3>
+		<p>This release brings major performance improvements for the JUnit test runner, as well as a couple of bug fixes and small features</p>
+		<h5>Generator</h5>
+		<p>
+		<ul class="changes">
+			<li>Fixed: In some rare cases, the final packed JavaScript file could include classes in the wrong order, creating runtime errors</li>
+		</ul>
+		</p>
+		<h5>Test Helper</h5>
+		<p>
+		<ul class="changes">
+			<li>The scripts defined in @ScriptsAfter, @ScriptsBefore of a parent test class are now inherited by subclasses</li>
+			<li>Unit tests execute much faster on large projects. Improvements up to 8x have been measured on real codebases.</li>
+		</ul>
+		</p>
+		
 		<h3>3.1.4 <span class="releaseDate">(22-Apr-2015)</span></h3>
 		<p>This release brings bug fixes and small features</p>
 		<h5>Generator</h5>
