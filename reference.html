@@ -734,7 +734,9 @@ For jQuery, the $ object and function are found in the org.stjs.javascript.jquer
 					are allowed to be used inside the Java sources used for
 					generation. A common usage is when you reserved in the Java
 					sources a package for bridges to some JavaScript libraries. This
-					package should than be excluded from the generation process.</li>
+					package should than be excluded from the generation process.
+					This can also include specific java class cannonical names (e.g.: 
+					"com.acme.util.MyStringBuilder")</li>
 				<li><b>generateArrayHasOwnProperty</b> - true to generate
 					inside each array iteration if (!array.hasOwnProperty(index))
 					continue; in order to protect array iteration from the inclusion
