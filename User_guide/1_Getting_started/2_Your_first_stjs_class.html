@@ -12,14 +12,15 @@ title: User Guide
 		<h5 class="Tutorial__step__title">Create the HelloWorld class</h5>
 
 		<p>
-			We will now create a new HelloWorld class that adds a bit of dynamic behavior to the form on our page. We
-			are going to write a little piece of JavaScript that displays a dialog box that says "Hello Bob" when the
-			user types "Bob" in the form field and presses the "Go" button. Here's the code that does this:
+			We will now create a new <span class="InlineCode">HelloWorld</span> class that adds a bit of dynamic
+			behavior to the form on our page. We are going to write a little piece of JavaScript that displays a dialog
+			box that says "Hello Bob" when the user types "Bob" in the form field and presses the "Go" button. Here's
+			the code that does this:
 		</p>
 
 		<p>
-			In the src/main/java/hello folder of your project, create a file named HelloWorld.java with the following
-			content:
+			In the <span class="InlineCode">src/main/java/hello</span> folder of your project, create a file named
+			<span class="InlineCode">HelloWorld.java</span> with the following content:
 		</p>
 		<pre class="code prettyprint lang-java">
 package hello;
@@ -86,7 +87,8 @@ public class HelloWorld {
 		</p>
 
 		<p>
-			In your index.html, add the following &lt;head&gt; section:
+			In your <span class="InlineCode">index.html</span>, add the following
+			<span class="InlineCode">&lt;head&gt;</span> section:
 		</p>
 		<pre class="code prettyprint lang-html">
 &lt;head&gt;
@@ -109,7 +111,8 @@ public class HelloWorld {
 		<p>
 			In the previous steps, we've told you that you could recompile your JavaScript without ever shutting
 			down your web server. Let's try that out. First of all, make sure that your web server is still
-			running. You can restart with `mvn jetty:run` if necessary. Then rebuild the JavaScript:
+			running. You can restart it with <span class="InlineCode">mvn jetty:run</span> if necessary. Then rebuild
+			the JavaScript:
 		</p><
 		<pre class="code">
 # Incremental build. Only the classes that have changed are re-compiled
