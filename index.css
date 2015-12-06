@@ -246,3 +246,12 @@ table.properties td.name {
 	color:#10C500;
 	margin:15px 5px 5px;
 }
+
+.Index {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+.Index__item {
+	margin-left: 20px;
+}
