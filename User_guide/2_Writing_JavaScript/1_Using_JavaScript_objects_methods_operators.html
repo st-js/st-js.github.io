@@ -31,7 +31,9 @@ new Array&lt;SomeType&gt;(length)
 new Array&lt;SomeType&gt;(el1, el2, el3)
 
 // [2] Constructor without new
-// Not mapped
+Array()
+Array(length)
+Array(el1, el2, el3)
 
 // [3] Array literal
 $array(el1, el2, el3)
@@ -67,7 +69,9 @@ new Array(length)
 new Array(el1, el2, el3)
 
 // [2] Constructor without new
-
+Array()
+Array(length)
+Array(el1, el2, el3)
 
 // [3] Array literal (in JSCollections)
 [el1, el2, el3]
@@ -95,13 +99,20 @@ arr.forEach(function(val, i, a){ ... })
 </pre>
 </div>
 <div class="clear"></div>
+<p>
+	All the methods not shown in the snippet above can be called in exactly the same way as you would in JavaScript.
+</p>
+<p>
+	ST-JS also bundles a full JavaDoc of the <span class="InlineCode">Array</span> API. If your IDE is setup correctly
+	you should be able to automatically see the documentation for each method right as you type it.
+</p>
 <ul>
 	<li>
 		[1] No differences between Java and JavaScript.
 	</li>
 	<li>
-		[2] This form of array construction was not mapped. Use the <span class="InlineCode">new Array&lt;&gt;()</span>
-		form instead.
+		[2] No differences between Java and JavaScript. The <span class="InlineCode">Array</span> method is a static
+		member of the <span class="InlineCode">org.stjs.javascript.JSGlobal</span> class.
 	</li>
 	<li>
 		[3] <span class="InlineCode">$array()</span> is a static function declared in the class
@@ -145,10 +156,149 @@ arr.forEach(function(val, i, a){ ... })
 </ul>
 
 <h5>Associative Arrays / Maps</h5>
+<p>
+	ST-JS provides a simple Map-like functionality by exposing bare JavaScript objects as key-value stores. The
+	advantage of this approach is that the generated JavaScript code can be executed directly without depending on
+	a specific library. Given the static nature of Java, the natural and dynamic
+	<span class="InlineCode">object["propertyName"]</span> notation cannot be used directly. The
+	<span class="InlineCode">org.stjs.javascript.Map</span> class can be used instead.
+</p>
+
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+// [1] Construction with Object literal
+Map&lt;String, SomeType&gt; map = $map()
+Map&lt;String, SomeType&gt; map = $map("k1", v1, "k2", v2)
+
+// [2] Reading
+map.$get(key)
+
+// [3] Writing
+map.$put(key, value)
+
+// [4] Deleting
+map.$delete(key)
+
+// [5] Iteration with for-in
+for(String key : map){
+	...
+}
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+// [1] Construction with Object literal
+var map = {}
+var map = {"k1": v1, "k2": v2}
+
+// [2] Reading
+map[key]
+
+// [3] Writing
+map[key] = value;
+
+// [4] Deleting
+delete map[key]
+
+// [5] Iteration with for-in
+for(var key in map){
+	...
+}
+</pre>
+</div>
+<div class="clear"></div>
+<ul>
+	<li>
+		[1] <span class="InlineCode">$map()</span> is a static function declared in the class
+		<span class="InlineCode">org.stjs.javascript.JSCollections</span>. Just like in Javascript,
+		you can only use string literals as keys. Attempting to use anything else results in a compile
+		time error. Values however may be any kind of expression.
+	</li>
+	<li>
+		[2], [3], [4] Unfortunately, the <span class="InlineCode">[]</span> notation can ony be used with native arrays
+		in Java. On top of that, the JavaScript <span class="InlineCode">$delete()</span> keyword has no equivalent at
+		all in Java. The <span class="InlineCode">$get()</span> and <span class="InlineCode">$put()</span> methods is
+		the ST-JS way of working around this impedance mismatch between two languages.
+	</li>
+	<li>
+		[5] No differences between Java and JavaScript
+	</li>
+</ul>
 
 <h5>undefined</h5>
+<p>
+	The <span class="InlineCode">undefined</span> value is a pure JavaScript concept that has no equivalent in Java.
+	ST-JS simply treats <span class="InlineCode">undefined</span> as <span class="InlineCode">null</span>. In our
+	experience, this simple equivalence is enough to handle undefined correctly. Below are some examples of expressions
+	that are often used when dealing with <span class="InlineCode">undefined</span> in different cases:
+</p>
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+// [1] Checking for equality
+myvar == null
 
-<h5>The == operator</h5>
+// [2] Checking for type
+typeof(myvar) == "undefined"
+
+// [3] Assignment
+myvar = undefined
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+// [1] Checking for equality
+myvar == null
+
+// [2] Checking for type
+(typeof myvar) == "undefined"
+
+// [3] Assignment
+myvar = undefined
+</pre>
+</div>
+<div class="clear"></div>
+<ul>
+	<li>
+		[1] No differences between Java and JavaScript. Just like in JavaScript, it makes to sense to write
+		<span class="InlineCode">myvar == undefined</span> since nothing is equal to
+		<span class="InlineCode">undefined</span>, including <span class="InlineCode">undefined</span> itself.
+	</li>
+	<li>
+		[2] Almost no differences between Java and JavaScript. The only difference is the placement of the parenthesis.
+		The <span class="InlineCode">typeof</span> function is a static member of the
+		<span class="InlineCode">org.stjs.javascript.JSGlobal</span> class.
+	</li>
+	<li>
+		[3] No differences between Java and JavaScript. The <span class="InlineCode">undefined</span> value is a static
+		member of the <span class="InlineCode">org.stjs.javascript.JSGlobal</span> class.
+	</li>
+</ul>
+
+
+<h5>The == and === operators</h5>
+<p>
+	The Java <span class="InlineCode">==</span> operator is translated directly to the JavaScript
+	<span class="InlineCode">==</span> operator.
+</p>
+<p>
+	It might seem at first that the <span class="InlineCode">===</span> operator is a more faithful translation of the
+	intent expressed in Java source, but given that Java lacks the concept of <span class="InlineCode">undefined</span>
+	and that <span class="InlineCode">null !== undefined</span> in JavaScript, using <span class="InlineCode">===</span>
+	would leave us with no simple way to guard against <span class="InlineCode">undefined</span> values.
+	<span class="InlineCode">typeof</span> could work, but the condition is rather cumbersome to use and needs to be
+	combined with a check against <span class="InlineCode">null</span> anyway.
+</p>
+<p>
+	On top of that, the fact that ST-JS code is type checked before being translated to JavaScript pretty much
+	guarantees that <span class="InlineCode">===</span> and <span class="InlineCode">==</span> are equivalent in the
+	vast majority of cases. There are a few cases where they aren't (such as when the ST-JS code is being called
+	incorrectly by external JavaScript code), but we have decided to let the users handle those rare cases manually to
+	gain in clarity in the majority of common cases.
+</p>
 
 <h5>Constructor, prototype and referencing properties by name</h5>
 
