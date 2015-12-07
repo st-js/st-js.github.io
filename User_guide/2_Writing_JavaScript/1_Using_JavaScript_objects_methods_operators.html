@@ -2,3 +2,156 @@
 layout: userguide
 title: User Guide
 ---
+<h4>Using JavaScript objects, methods and operators</h4>
+<p>
+	In general, you can use JavaScript objects in your Java/ST-JS code in exactly the same way as you would in
+	JavaScript. You can access fields using the familiar <span class="InlineCode">object.propery</span> notation, and
+	invoke methods using <span class="InlineCode">object.method(arg)</span> notation. There are however a few JavaScript
+	specific idioms and constructs that cannot be translated as-is into Java that you need to know about.
+</p>
+<p>
+	You will find that most methods that cause ST-JS to translate the source Java code into JavaScript code
+	that doesn't look exactly like the source are prefixed with the <span class="InlineCode">$</span> character so that
+	they are easily identifiable (eg: <span class="InlineCode">$map</span>, <span class="InlineCode">$array</span>,
+	<span class="InlineCode">$get</span>, <span class="InlineCode">$put</span>, etc...)
+</p>
+<h5>Arrays</h5>
+<p>
+	In ST-JS the JavaScript <span class="InlineCode">Array</span> type is mapped to the
+	<span class="InlineCode">org.stjs.javascript.Array</span> class. Some array related constructs are used in a
+	different way in Java and Javascript. The list below lists all of the important cases:
+</p>
+
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+// [1] Constructor with new
+new Array&lt;SomeType&gt;()
+new Array&lt;SomeType&gt;(length)
+new Array&lt;SomeType&gt;(el1, el2, el3)
+
+// [2] Constructor without new
+// Not mapped
+
+// [3] Array literal
+$array(el1, el2, el3)
+
+// [4] Read access
+arr.$get(index)
+
+// [5] Write access
+arr.$set(index, value)
+
+// [6] Read length
+arr.$length()
+
+// [7] Set length
+arr.$length(newLength)
+
+// [8] Iteration with for-in
+for(String i : arr){
+	...
+}
+
+// [9] Iteration with forEach
+arr.$forEach(val -> ...)
+arr.$forEach((val, i, a) -> ...)
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+// [1] Constructor with new
+new Array()
+new Array(length)
+new Array(el1, el2, el3)
+
+// [2] Constructor without new
+
+
+// [3] Array literal (in JSCollections)
+[el1, el2, el3]
+
+// [4] Read access
+arr[index]
+
+// [5] Write access
+arr[index] = value
+
+// [6] Read length
+arr.length
+
+// [7] Set length
+arr.length = newLength
+
+// [8] Iteration with for-in
+for(var i in arr){
+	if (arr.hasOwnProperty(i)) { ... }
+}
+
+// [9] Iteration with forEach
+arr.forEach(function(val){ ... })
+arr.forEach(function(val, i, a){ ... })
+</pre>
+</div>
+<div class="clear"></div>
+<ul>
+	<li>
+		[1] No differences between Java and JavaScript.
+	</li>
+	<li>
+		[2] This form of array construction was not mapped. Use the <span class="InlineCode">new Array&lt;&gt;()</span>
+		form instead.
+	</li>
+	<li>
+		[3] <span class="InlineCode">$array()</span> is a static function declared in the class
+		<span class="InlineCode">org.stjs.javascript.JSCollections</span>. ST-JS cannot use native Java array literals
+		because they yield the wrong data type (<span class="InlineCode">SomeType[]</span> instead of
+		<span class="InlineCode">Array&lt;Sometype&gt;</span>.
+	</li>
+	<li>
+		[4],[5] The java native arrays are native types that don't define any methods, and are therefore not suitable to
+		mirror the very rich JavaScript arrays. Unfortunately, the <span class="InlineCode">[]</span> notation can
+		ony be used with native arrays in Java. The <span class="InlineCode">$get()</span> method is the ST-JS way of
+		working around this impedance mismatch between two languages.
+	</li>
+	<li>
+		[6],[7] In JavaScript arrays, setting the length property of arrays may have side-effects like truncating the
+		array. In Java, it is unfortunately impossible to apply side effects when a field is set directly. It is
+		however possible to do so if the field is set through an accessor method instead of directly. One of the goals
+		of ST-JS was to be able to run short snippets of client-side code directly on the server in order to avoid code
+		duplication. The <span class="InlineCode">$length()</span> methods are the ST-JS way of meeting all of these
+		constraints at the same time.
+	</li>
+	<li>
+		[8] The Java form of the for-in loop makes one of the quirks of JavaScript very apparent: The for-in loop on
+		arrays iterates on the indices rather than on the values, it returns all the indices as Strings, and it also
+		includes all enumerable prototype properties in the iteration. While this behavior makes sense when considering
+		arrays as Objects in JavaScript, it is pretty confusing and unexpected. ST-JS solves this problem by making it
+		clear that the iteration type are Strings, and by making sure that the iteration only happens on array indices
+		and not on any other prototype properties.
+	</li>
+	<li>
+		[9] In Java 8 the <span class="InlineCode">Iterable</span> interface which is implemented by the
+		<span class="InlineCode">Array</span> class introduced a new method with a default implementation:
+		<span class="InlineCode">forEach</span>. Unfortunately, the <span class="InlineCode">Array</span> already
+		contained a <span class="InlineCode">forEach</span> method since its very first version, back before Java 8
+		became available, but with a very slightly different signature. Unfortunately, the two signatures are considered
+		different by the Java compiler but are so similar that they are ambiguous when using lambdas or method
+		references. This means that lambdas and method references couldn't be used without ugly type casting, partially
+		defeating their purpose of improving code readability. The <span class="InlineCode">$forEach()</span> methods
+		solve this problem.
+	</li>
+</ul>
+
+<h5>Associative Arrays / Maps</h5>
+
+<h5>undefined</h5>
+
+<h5>The == operator</h5>
+
+<h5>Constructor, prototype and referencing properties by name</h5>
+
+<h5>The || operator</h5>
+
+<h5>Handling un-translatable cases</h5>
