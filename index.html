@@ -1,93 +1,124 @@
 ---
-layout: base
 title: Strongly Typed JavaScript
 ---
+<!DOCTYPE html>
+<html>
+<head>
+    {% include header.html %}
+    <style>
+        body {
+            font-size:13px;
+        }
 
-<div class="topHighlight">
+        .Header .Title {
+            padding-top:25px;
+        }
+
+        .Header .intro {
+            padding-top: 12px;
+        }
+
+        .messageItem {
+            color: #202020;
+        }
+
+        .messageItem h3 {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .messagesHeader h2 {
+            font-size: 2.6em;
+            font-weight: bold;
+            text-align: center;
+            margin: 12px 0 20px 0;
+            color: #10C500;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<header class="Header Header--index">
+    <div class="container_12">
+
+        <div class="grid_9">
+            <h1 class="Title">ST-JS: Strongly Typed JavaScript</h1>
+
+            <h2 class="Subtitle">Borrowing Java's syntax to write type-safe JavaScript</h2>
+
+            <p class="intro">ST-JS is a Java to JavaScript transpiler that outputs readable, recognizable code. It lets
+                you write code that uses the JavaScript and DOM APIs using Java's syntax and tooling.</p>
+
+            <p class="intro">ST-JS helps you manage the complexity of large dynamic single-page web applications by
+                combining the strong, static typing of Java, with the wealth of existing libraries of JavaScript.</p>
+        </div>
+
+        <div class="grid_3">
+            {% include nav.html %}
+        </div>
+        <div class="clear"></div>
+
+        <div class="prefix_1 grid_5">
+            <div class="highlight"><div class="title">Example source code (Java)</div><pre><code class="language-java" data-lang="java"><span class="nf">StockData</span> <span class="n">stockData</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StockData</span><span class="o">()</span> <span class="o">{</span> <span class="o">{</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">;</span>
+    <span class="n">close</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">;</span>
+    <span class="n">stock</span> <span class="o">=</span> <span class="s">"ABC"</span><span class="o">;</span>
+<span class="o">}</span> <span class="o">};</span>
+<span class="na">$</span><span class="o">(</span><span class="n">that</span><span class="o">.</span><span class="na">row</span><span class="o">(</span><span class="n">stockData</span><span class="o">)).</span><span class="na">appendTo</span><span class="o">(</span><span class="s">"table tbody"</span><span class="o">);</span>
+<span class="n">that</span><span class="o">.</span><span class="na">stocks</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">stockData</span><span class="o">.</span><span class="na">stock</span><span class="o">);</span></code></pre></div>
+        </div>
+
+        <div class="grid_5 suffix_1">
+            <div class="highlight"><div class="title">Example generated code (JavaScript)</div><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">stockData</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">last</span> <span class="o">:</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="nx">close</span> <span class="o">:</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="nx">stock</span> <span class="o">:</span> <span class="s2">"ABC"</span>
+<span class="p">};</span>
+<span class="na">$</span><span class="o">(</span><span class="n">that</span><span class="o">.</span><span class="na">row</span><span class="o">(</span><span class="n">stockData</span><span class="o">)).</span><span class="na">appendTo</span><span class="o">(</span><span class="s">"table tbody"</span><span class="o">);</span>
+<span class="n">that</span><span class="o">.</span><span class="na">stocks</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">stockData</span><span class="o">.</span><span class="na">stock</span><span class="o">);</span></code></pre></div>
+        </div>
+
+    </div>
+</header>
+
 <div class="container_12">
+    <div class="grid_12 messagesHeader">
+        <h2>ST-JS will help you with</h2>
+    </div>
 
-	<div class="grid_9">
-		<h1>ST-JS : Strongly Typed JavaScript</h1>
-		<h2>Borrowing Java's syntax to write type-safe JavaScript</h2>
+    <div class="prefix_1 grid_2 messageItem">
+        <h3>Managing<br>complexity</h3>
+        Because of its strong typing and its static code analysis tools, Java makes it easier to handle complex projects
+        than JavaScript.
+    </div>
 
-		<p class="intro">ST-JS is a Java-to-JavaScript transpiler that outputs readable, recognizable code. It lets you write code that uses the JavaScript and DOM APIs using Java's syntax and tooling.</p>
-		<p class="intro">ST-JS helps you manage the complexity of large dynamic single-page web applications by combining the strong, static typing of Java, with the wealth of existing libraries of JavaScript.</p>
-	</div>
+    <div class="grid_2 messageItem">
+        <h3>In-browser<br>Debugging</h3>
+        ST-JS generates recognizable JavaScript code which is easy to debug in any browser without any additional tools
+        or plugins.
+    </div>
 
-	<div class="grid_3">
-		<ul class="menu">
-			<li><a href="faq.html">FAQ</a></li>
-			<li><a href="download.html">Download</a></li>
-			<li><a href="tutorial.html">Tutorial</a></li>
-			<li><a href="reference.html">Reference</a></li>
-			<li><a href="bridges.html">Bridges</a></li>
-			<li><a href="changelog.html">Changelog</a></li>											
-			<li><a href="contributing.html">Contributing</a></li>
-			<li><a href="http://axcraciun.wordpress.com/">Blog</a></li>
-		</ul>
-	</div>
-	<div class="clear"></div>
+    <div class="grid_2 messageItem">
+        <h3>Unit<br>testing</h3>
+        ST-JS includes a JUnit test runner that eases the creation of client side unit tests, and the integration of
+        their results in your continuous build environment.
+    </div>
 
-	<div class="prefix_1 grid_5">
-		<p class="code java">
-			<span class="title">Example source code (Java)</span><br><br>
-			<span class="type">StockData</span> <span class="variable">stockData</span> = <span class="keyword">new</span> <span class="type">StockData</span>() { {<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">last</span> = <span class="litteral">10.0</span>;<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">close</span> = <span class="litteral">2.0</span>;<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">stock</span> = <span class="litteral">"ABC"</span>;<br>
-			} };<br>
-			<span class="function">$</span>(<span class="variable">that</span>.<span class="function">row</span>(<span class="variable">stockData</span>)).<span class="function">appendTo</span>(<span class="litteral">"table tbody"</span>);<br>
-			<span class="variable">that</span>.<span class="variable">stocks</span>.<span class="function">push</span>(<span class="variable">stockData</span>.<span class="variable">stock</span>);
-		</p>
-	</div>
+    <div class="grid_2 messageItem">
+        <h3>Staying<br>lightweight</h3>
+        ST-JS does not impose any client-side or server-side framework, not even its own. You are completely free to use
+        whichever solution suits you best.
+    </div>
 
-	<div class="grid_5 suffix_1">
-		<p class="code javascript">
-			<span class="title">Example generated code (JavaScript)</span><br><br>
-			<span class="keyword">var</span> <span class="variable">stockData</span> = {<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">last</span> : <span class="litteral">10.0</span>,<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">close</span> : <span class="litteral">2.0</span>,<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">stock</span> : <span class="litteral">"ABC"</span><br>
-			};<br>
-			<span class="function">$</span>(<span class="variable">that</span>.<span class="function">row</span>(<span class="variable">stockData</span>)).<span class="function">appendTo</span>(<span class="litteral">"table tbody"</span>);<br>
-			<span class="variable">that</span>.<span class="variable">stocks</span>.<span class="function">push</span>(<span class="variable">stockData</span>.<span class="variable">stock</span>);
-		</p>
-	</div>
-</div>
+    <div class="grid_2 suffix_1 messageItem">
+        <h3>Self<br>documenting</h3>
+        Using existing JavaScript libraries becomes easier by using ST-JS bridges which give you hints about the types
+        of all parameters and return types.
+    </div>
 </div>
 
-<div class="container_12">
-	
-	
-	<div class="grid_12 messagesHeader">
-		<h2>ST-JS will help you with</h2>
-	</div>
-
-	<div class="prefix_1 grid_2 messageItem">
-		<h3>Managing<br>complexity</h3>
-		Because of its strong typing and its static code analysis tools, Java makes it easier to handle complex projects than JavaScript.
-	</div>
-
-	<div class="grid_2 messageItem">
-		<h3>In-browser<br>Debugging</h3>
-		ST-JS generates recognizable JavaScript code which is easy to debug in any browser without any additional tools or plugins.
-	</div>
-
-	<div class="grid_2 messageItem">
-		<h3>Unit<br>testing</h3>
-		ST-JS includes a JUnit test runner that eases the creation of client side unit tests, and the integration of their results in your continuous build environment.
-	</div>
-
-	<div class="grid_2 messageItem">
-		<h3>Staying<br>lightweight</h3>
-		ST-JS does not impose any client-side or server-side framework, not even its own. You are completely free to use whichever solution suits you best.
-	</div>
-
-	<div class="grid_2 suffix_1 messageItem">
-		<h3>Self<br>documenting</h3>
-		Using existing JavaScript libraries becomes easier by using ST-JS bridges which give you hints about the types of all parameters and return types.
-	</div>
-
-	
-</div>
-
+{% include footer.html %}
+</body>
+</html>
