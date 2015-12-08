@@ -204,7 +204,7 @@ delete map[key]
 
 // [5] Iteration with for-in
 for(var key in map){
-	...
+	if (map.hasOwnProperty(key)) { ... }
 }
 </pre>
 </div>
@@ -300,8 +300,143 @@ myvar = undefined
 	gain in clarity in the majority of common cases.
 </p>
 
-<h5>Constructor, prototype and referencing properties by name</h5>
+<h5>Constructor, prototype, Class and referencing properties by name</h5>
+<p>
+	Every JavaScript object contains the special <span class="InlineCode">constructor</span> and
+	<span class="InlineCode">prototype</span> properties. Those properties are not available in the Java
+	<span class="InlineCode">Object</span> definition, but ST-JS provides different ways to access them.
+</p>
+<p>
+	The various properties of JavaScript objects can also always be accessed directly by name. ST-JS also provides
+	different ways to expose this functionality in Java code.
+</p>
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+// [1] Get a property by name
+$get(somevar, "property")
+
+// [2] Set a property by name
+$put(somevar, "property", value);
+
+// [3] Iterating over all properties
+for(String propName : $properties(obj)){
+	...
+}
+
+// [4] Referencing a prototype
+$prototype(obj)
+
+// [5] Referencing a constructor
+$constructor(obj)
+obj.getClass()
+MyType.class
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+// [1] Get a property by name
+somevar["property"]
+
+// [2] Set a property by name
+somevar["property"] = value;
+
+// [3] Iterating over all properties
+for(var propName in obj){
+	if (obj.hasOwnProperty(propName)) { ... }
+}
+
+// [4] Referencing a prototype
+obj.prototype
+
+// [5] Referencing a constructor
+obj.constructor
+obj.getClass()
+MyType
+</pre>
+</div>
+<div class="clear"></div>
+<ul>
+	<li>
+		[1],[2] The <span class="InlineCode">$get()</span> and <span class="InlineCode">$set()</span> methods are
+		static members of the <span class="InlineCode">org.stjs.javascript.JSObjectAdapter</span> class. They work
+		in exactly the same way as their <span class="InlineCode">Map</span> equivalent, but operate on any object.
+	</li>
+	<li>
+		[3] The <span class="InlineCode">$properties()</span> method is a static member of the
+		<span class="InlineCode">org.stjs.javascript.JSObjectAdapter</span> class. It basically just casts any object
+		to a generic STJS <span class="InlineCode">Map&lt;String, Object&gt;</span> from which you can read properties
+		using the <span class="InlineCode">Map</span> API.
+	</li>
+	<li>
+		[4] The <span class="InlineCode">$prototype()</span> method is a static member of the
+		<span class="InlineCode">org.stjs.javascript.JSObjectAdapter</span> class.
+	</li>
+	<li>
+		[5] The <span class="InlineCode">$constructor()</span> method is a static member of the
+		<span class="InlineCode">org.stjs.javascript.JSObjectAdapter</span> class.
+		<span class="InlineCode">$constructor()</span>, <span class="InlineCode">getClass()</span> and class literals
+		are equivalent in terms of what value is actually returned in JavaScript, but only
+		<span class="InlineCode">$constructor()</span> is really type safe. In some cases, it might still be preferable
+		to use the class literal or<span class="InlineCode">getClass()</span> method to better convey intent in your
+		code, but if you do so please keep in mind that <span class="InlineCode">java.lang.Class</span> is not currently
+		mapped my ST-JS and that any methods you call on this class will fail at runtime.
+	</li>
+</ul>
 
 <h5>The || operator</h5>
+<p>
+	In javascript, the <span class="InlineCode">||</span> operator can be used to return the first truthy value of a
+	list. In Java, that same operator can only be applied to boolean values and will always return a boolean. In most
+	cases that is enough, but in some cases the JavaScript behavior is desirable. In those cases, you can use the
+	techniques below:
+</p>
+
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+$or(val1, val2)
+$or(val1, val2, val3)
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+val1 || val2
+val1 || val2 || val3
+</pre>
+</div>
+<div class="clear"></div>
+<p>
+	The <span class="InlineCode">$or()</span> method is a static member of the
+	<span class="InlineCode">org.stjs.javascript.JSObjectAdapter</span> class.
+</p>
 
 <h5>Handling un-translatable cases</h5>
+<p>
+	In some rare cases, the JavaScript code cannot be expressed cleanly (or at all) using the ST-JS API. For these
+	very special cases, you can use <span class="InlineCode">org.stjs.javascript.JSObjectAdapter.$js()</span>. This
+	method only accepts string literals and outputs the content of the string directly inside the generated
+	JavaScript code. The JS code in the string literal must also be a full expression, and will be surrounded by
+	parenthesis in the generated code.
+</p>
+<div class="grid_6 alpha">
+<pre class="code prettyprint language-java">
+// Java
+Array&lt;String&gt; list =
+	$js("Array.prototype.slice.call(arguments, 0)")
+</pre>
+</div>
+<div class="grid_6 omega">
+<pre class="code prettyprint language-javascript">
+// JavaScript
+var list =
+	(Array.prototype.slice.call(arguments, 0))
+</pre>
+</div>
+<div class="clear"></div>
+<p>
+	Please use <span class="InlineCode">$js()</span> with great care as it is not type safe. It is also not verified to
+	be syntactically valid and, if used incorrectly, could cause the generated code to be un-parseable.
+</p>
