@@ -1,5 +1,9 @@
 safe: true
 lsi: false
-pygments: true
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
 
 last_stjs_version: 3.3.0
