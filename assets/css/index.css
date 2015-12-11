@@ -26,7 +26,6 @@ b, strong, em, small { line-height: 1; }
 
 code, pre {
 	font-family:Ubuntu Mono,Menlo,Monaco,Consolas,"Courier New",monospace
-
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -163,8 +162,6 @@ h1, h2, h3, h4, h5, h6 {
 	border-bottom: 2px solid #383838;
 }
 
-
-
 .code {
 	font-family: Ubuntu Mono,Menlo,Monaco,Consolas,"Courier New",monospace;
 	color: #BABABA;
@@ -178,6 +175,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .Header .code {
 	margin-top: 20px;
+}
+
+code {
+	background-color: #E5E5E5;
+	border-radius: 2px;
+}
+
+pre code {
+	background-color: inherit;
 }
 
 .Index {
