@@ -1,9 +1,7 @@
 ---
 layout: userguide
-title: User Guide
+title: Creating an ST-JS project using Maven
 ---
-
-## Creating an ST-JS project using Maven
 
 In this Chapter, you will learn how to build a "Hello World" application using ST-JS. In order to follow this
 chapter knowledge of Maven, Java, JavaScript and HTML is required. We will configure this Hello World project
@@ -20,7 +18,7 @@ Instead of following all the steps in this chapter manually, you can also clone 
 
 
 
-1. ### Create the project descriptor (pom.xml)
+1. ## Create the project descriptor (pom.xml)
 
 Create a file named `pom.xml` in the root folder of your project with the following content:
 
@@ -106,7 +104,7 @@ Create a file named `pom.xml` in the root folder of your project with the follow
 
 
 
-2. ### Create the webapp descriptor (web.xml)
+2. ## Create the webapp descriptor (web.xml)
 
 At the root of your project, create the following directory structure: `src/main/webapp/WEB-INF`
 
@@ -129,7 +127,7 @@ In the `src/main/webapp/WEB-INF` folder, create a file named `web.xml` with the 
 
 
 
-3. ### Add the home page
+3. ## Add the home page
 
 In the `src/main/webapp` folder create a new file named `index.html`. This is our home page.
 
@@ -149,7 +147,7 @@ In the `src/main/webapp` folder create a new file named `index.html`. This is ou
 
 
 
-4. ### Build and run the project
+4. ## Build and run the project
 
 Run the project by invoking maven from the command line
 

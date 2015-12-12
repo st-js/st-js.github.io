@@ -1,10 +1,9 @@
 ---
 layout: userguide
-title: User Guide
+title: Handling the JavaScript Function type
 ---
-## Handling the JavaScript Function type
 
-### Using the Callback and Function interfaces
+## Using the Callback and Function interfaces
 
 JavaScript is a language that treats functions as first class objects. In JavaScript, you can easily manipulate
 references to function instances, assign them to variables, invoke the functions directly from those variables,
@@ -67,7 +66,7 @@ useful in cases where the exact types of a function are not known or are un-impo
 
 
 
-### Using Lambdas as functions
+## Using Lambdas as functions
 
 Since Java 8, one of the best ways to pass create callbacks and functions are lambdas. In order to respect the
 expected semantics and type of `this` of the Java source code, ST-JS automatically
@@ -118,7 +117,7 @@ handler2(event);
 
 
 
-### Using method reference as functions
+## Using method reference as functions
 
 Another nice and short way to create functions with ST-JS is to use the method reference feature introduced in Java
 8.
@@ -182,7 +181,7 @@ isn't supported since static methods are not really inherited in Java.
 
 
 
-### Defining your own Function type
+## Defining your own Function type
 
 For readability purposes, you may want to define your own type of functional interface. Doing so can really help
 clarifying the API of your classes that make use of your new custom functional interface.
@@ -235,7 +234,7 @@ Something = function(event){
 </div>
 <div class="clear"></div>
 
-### Using anonymous classes as functions
+## Using anonymous classes as functions
 
 While we strongly recommend that you use lambdas or method references when creating new functions, there are cases
 where this is simply not possible (such as when you are stuck on Java 7 or below). For this reason, ST-JS

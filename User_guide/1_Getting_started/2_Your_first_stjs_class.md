@@ -1,12 +1,11 @@
 ---
 layout: userguide
-title: User Guide
+title: Your first ST-JS class
 ---
-## Your first ST-JS class
 
 Now let's start writing some actual JavaScript, and see how ST-JS works.
 
-1. ### Create the HelloWorld class
+1. ## Create the HelloWorld class
 
 We will now create a new <span class="InlineCode">HelloWorld</span> class that adds a bit of dynamic
 behavior to the form on our page. We are going to write a little piece of JavaScript that displays a dialog
@@ -72,7 +71,7 @@ public class HelloWorld {
 }
 {% endhighlight %}
 
-2. ### Include JavaScript in the page
+2. ## Include JavaScript in the page
 
 We've just written our first bit of JavaScript code, but now we still need to tell the browser to load it.
 
@@ -95,7 +94,7 @@ In your `index.html`, add the following `<head>` section:
 
 
 
-3. ### Compile and run your code
+3. ## Compile and run your code
 
 In the previous steps, we've told you that you could recompile your JavaScript without ever shutting
 down your web server. Let's try that out. First of all, make sure that your web server is still
@@ -114,7 +113,7 @@ and say Hello to anyone you want!
 <img src="/hello.jpg">
 
 
-4. ### You're done
+4. ## You're done
 
 That's the end of our getting started guide. Please check the rest of the user guide for more complete
 information on writing code, unit testing it, building it, packaging it, and running it on your target

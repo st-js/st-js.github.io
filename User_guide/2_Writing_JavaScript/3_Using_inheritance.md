@@ -1,11 +1,10 @@
 ---
 layout: userguide
-title: User Guide
+title: Using inheritance
 ---
-## Using inheritance
 
-### Basic subtyping
+## Basic subtyping
 
-### Member visibility and JavaScript inheritance
+## Member visibility and JavaScript inheritance
 
-### instanceof
+## instanceof

@@ -1,8 +1,7 @@
 ---
 layout: userguide
-title: User Guide
+title: Using JavaScript objects, methods and operators
 ---
-## Using JavaScript objects, methods and operators
 
 In general, you can use JavaScript objects in your Java/ST-JS code in exactly the same way as you would in
 JavaScript. You can access fields using the familiar `object.propery` notation, and
@@ -13,7 +12,7 @@ You will find that most methods that cause ST-JS to translate the source Java co
 that doesn't look exactly like the source are prefixed with the `$` character so that
 they are easily identifiable (eg: `$map`, `$array`, `$get`, `$put`, etc...)
 
-### Arrays
+## Arrays
 
 In ST-JS the JavaScript `Array` type is mapped to the
 `org.stjs.javascript.Array` class. Some array related constructs are used in a
@@ -141,7 +140,7 @@ references. This means that lambdas and method references couldn't be used witho
 defeating their purpose of improving code readability. The `$forEach()` methods
 solve this problem.
 
-### Associative Arrays / Maps
+## Associative Arrays / Maps
 
 ST-JS provides a simple Map-like functionality by exposing bare JavaScript objects as key-value stores. The
 advantage of this approach is that the generated JavaScript code can be executed directly without depending on
@@ -209,7 +208,7 @@ the ST-JS way of working around this impedance mismatch between two languages.
 
 
 
-### undefined
+## undefined
 
 The `undefined` value is a pure JavaScript concept that has no equivalent in Java.
 ST-JS simply treats `undefined` as `null`. In our
@@ -257,7 +256,7 @@ member of the `org.stjs.javascript.JSGlobal` class.
 
 
 
-### The == and === operators
+## The == and === operators
 
 The Java `==` operator is translated directly to the JavaScript
 `==` operator.
@@ -277,7 +276,7 @@ gain in clarity in the majority of common cases.
 
 
 
-### Constructor, prototype, Class and referencing properties by name
+## Constructor, prototype, Class and referencing properties by name
 
 Every JavaScript object contains the special `constructor` and
 `prototype` properties. Those properties are not available in the Java
@@ -357,7 +356,7 @@ mapped my ST-JS and that any methods you call on this class will fail at runtime
 
 
 
-### The || operator
+## The || operator
 
 In javascript, the `||` operator can be used to return the first truthy value of a
 list. In Java, that same operator can only be applied to boolean values and will always return a boolean. In most
@@ -385,7 +384,7 @@ The `$or()` method is a static member of the
 `org.stjs.javascript.JSObjectAdapter` class.
 
 
-### Handling un-translatable cases
+## Handling un-translatable cases
 
 In some rare cases, the JavaScript code cannot be expressed cleanly (or at all) using the ST-JS API. For these
 very special cases, you can use `org.stjs.javascript.JSObjectAdapter.$js()`. This
