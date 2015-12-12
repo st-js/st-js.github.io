@@ -1,6 +1,5 @@
 ---
-layout: userguide
-title: Creating an ST-JS project using Maven
+title: 1.1. Creating an ST-JS project using Maven
 ---
 
 In this Chapter, you will learn how to build a "Hello World" application using ST-JS. In order to follow this

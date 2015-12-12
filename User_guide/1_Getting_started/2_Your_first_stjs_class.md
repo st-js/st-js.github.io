@@ -1,6 +1,5 @@
 ---
-layout: userguide
-title: Your first ST-JS class
+title: 1.2. Your first ST-JS class
 ---
 
 Now let's start writing some actual JavaScript, and see how ST-JS works.

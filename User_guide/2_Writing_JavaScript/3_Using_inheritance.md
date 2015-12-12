@@ -1,6 +1,5 @@
 ---
-layout: userguide
-title: Using inheritance
+title: 2.3. Using inheritance
 ---
 
 ## Basic subtyping

@@ -1,5 +1,6 @@
 safe: true
 lsi: false
+permalink: pretty
 
 kramdown:
   input: GFM
@@ -8,3 +9,13 @@ kramdown:
 
 
 last_stjs_version: 3.3.0
+
+defaults:
+  -
+    scope:
+      path: "User_guide"
+      type: pages
+
+    values:
+      isUserGuide: true # allows quick extraction from site.pages
+      layout: userguide

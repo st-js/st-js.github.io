@@ -1,6 +1,5 @@
 ---
-layout: userguide
-title: Using JavaScript objects, methods and operators
+title: 2.1. Using JavaScript objects, methods and operators
 ---
 
 In general, you can use JavaScript objects in your Java/ST-JS code in exactly the same way as you would in

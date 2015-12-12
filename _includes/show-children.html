@@ -1,0 +1,127 @@
+{% comment %}{% raw %}+++++++++++++++++++++++++++++++++++++++++++++++++
+
+This include will get all children for a given page in a folder hierarchy.
+
+Main logic here is mainly driven toward avoiding __ Liquid Exception: Nesting too deep __
+
+## Prerequisites :
+
+  - documentation is in a folder eg : documentation
+
+  - permalink is set to pretty in _config.yml
+
+  - folders hierarchy describes documentation organization
+
+documentation
+|--index.html
+|--chapter-1
+|  |--index.html
+|
+|--chapter-2
+|  |--index.html
+|  |
+|  |--part-1
+|  |  |--index.html
+|  |  |--subpart-1
+|  |     |--index.html
+|  |--part-2
+|  |  |--index.html
+|  |
+|  |--part-3.html
+
+// this is ok because with permalink set to pretty
+// it will become documentation/chapter-2/part-3/index.html
+
+- Pages at a same level are sorted depending on a front matter variable.
+  Numbering by tenth allows easy insertion for new doc
+
+    ---
+    page: title
+    weight: 10
+    ---
+
+- documentation get default variables values from _config.yml
+
+    defaults:
+      -
+        scope:
+          path: "documentation"
+          type: pages
+
+        values:
+          isDoc: true # allows quick extraction from site.pages
+          layout: page
+
+## Use
+
+This include can be called with several arguments :
+
+dir  : root dir to explore (ie : /documentation)
+
+docs : an array of pages - default to site.pages
+
+level: level at which we start printing (/documentation is at level 1,
+       /documentation/chapter-1 is at level 2, and so on)
+       Default to 'dir' level
+
+maxLevel: where to stop to print - default to 100
+
+Extracting documentation pages
+{% assign documents = site.pages | where: "isDoc", true | sort: "weight" %}
+{% assign dir = "documentation" %}
+
+This will print all documentation hierachy
+{% include show-children.html dir=dir docs=documents %}
+
+This will start printing at level 2
+{% include show-children.html dir=dir docs=documents level=2 %}
+
+This stop printing at level 2
+{% include show-children.html dir=dir docs=documents maxLevel=2 %}
+
++++++++++++++++++++++++++++++++++++++++++++++++++{% endraw %}{% endcomment %}
+
+{% assign parentDir = include.dir %}
+{% if parentDir == nil %}<h1>You must specify a root directory</h1>{% endif %}
+
+{% assign allDocs = include.docs %}
+{% if allDocs == nil %}{% assign allDocs = site.pages | sort: "weight" %}{% endif %}
+
+{% assign level = include.level %}
+{% if level == nil %}{% assign level = parentDir | remove_first: "/" | split:"/" | size %}{% endif %}
+
+{% assign maxLevel = include.maxLevel %}
+{% if maxLevel == nil %}{% assign maxLevel = 100 %}{% endif %}
+
+{% assign nextLevel = level | plus : 1 %}
+
+{% comment %}+++++++++++++++++++++++++++++++++++++++++++++++++
+Looking for all page in this path with the same level (siblings)
+This avoid to deep recursion and error like :
+__ Liquid Exception: Nesting too deep __
++++++++++++++++++++++++++++++++++++++++++++++++++{% endcomment %}
+
+{% assign siblings = "" | split: "/" %}
+{% for s in allDocs %}
+    {% assign sPageLevel = s.url | remove_first: "/" | split:"/" | size %}
+    {% if sPageLevel == level and s.url contains parentDir %}
+        {% if s.title %}{% assign siblings = siblings | push: s %}{% endif %}
+    {% endif %}
+{% endfor %}
+
+<ul class="Index">
+{% for p in siblings %}
+    <li class="Index__item"><a href="{{site.baseurl}}{{p.url}}"{%if p.url == page.url%} class="active"{%endif%}>{{ p.title }}</a>
+    {% if nextLevel <= maxLevel %}
+      {% include show-children.html dir=p.dir docs=allDocs level=nextLevel maxLevel=maxLevel %}
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+{% comment %}+++++++++++++++++++++++++++++++++++++++++++++++++
+Because all variables are globales (all includes have the same scope)
+we restore level and nextLevel variables to parent values
++++++++++++++++++++++++++++++++++++++++++++++++++{% endcomment %}
+{% assign level = level | minus : 1 %}
+{% assign nextLevel = nextLevel | minus : 1 %}

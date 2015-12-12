@@ -1,0 +1,9 @@
+{% assign minLevel = include.minLevel %}
+{% if minLevel == nil %}{% assign minLevel = 1 %}{% endif %}
+
+
+<div class="BreadCrumb container_12">
+    {% assign documents = site.pages | where: "isUserGuide", true | sort: "url" %}
+    {% include get-parents.html page=page minLevel=minLevel docs=documents %}
+    <p>{{ page.title }}</p>
+</div>

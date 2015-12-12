@@ -82,7 +82,6 @@ h1, h2, h3, h4, h5, h6 {
 
 	display:block;
 	height:auto;
-	margin:0;
 }
 
 .Header--index .Download,
@@ -104,6 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 .Menu {
 	list-style-type:none;
 	float:left;
+	margin:0;
 }
 
 .Menu a {
@@ -186,11 +186,6 @@ pre code {
 	background-color: inherit;
 }
 
-.Index {
-	list-style-type: decimal;
-	list-style-position: inside;
-}
-
 .Index__item {
 	margin-left: 20px;
 }
@@ -219,4 +214,11 @@ table.properties td.name {
 	vertical-align: middle;
 }
 
+.BreadCrumb p {
+	display: inline;
+}
+
+.BreadCrumb p+p:before {
+	content:"» ";
+}
 

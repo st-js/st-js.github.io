@@ -1,6 +1,5 @@
 ---
-layout: userguide
-title: Handling the JavaScript Function type
+title: 2.2. Handling the JavaScript Function type
 ---
 
 ## Using the Callback and Function interfaces

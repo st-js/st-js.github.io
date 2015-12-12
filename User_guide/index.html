@@ -20,6 +20,16 @@ title: User Guide
 <!-- TODO: Can we support automatic `this` binding with anonymous inner classes? -->
 <!-- ============================================= -->
 <h4>Index for ST-JS {{site.last_stjs_version}}</h4>
+
+{% comment %}Extracting documentation pages{% endcomment %}
+{% assign userguidePages = site.pages | where: "isUserGuide", true | sort: "url" %}
+{% assign userguideRoot = "User_guide" %}
+
+{% comment %}This will print all documentation hierachy{% endcomment %}
+{% include show-children.html dir=userguideRoot docs=userguidePages level=2 %}
+
+
+
 <ol class="Index">
     <li class="Index__item">
         Getting started
