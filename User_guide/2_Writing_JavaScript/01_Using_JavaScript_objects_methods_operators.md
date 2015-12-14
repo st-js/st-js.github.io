@@ -11,6 +11,9 @@ You will find that most methods that cause ST-JS to translate the source Java co
 that doesn't look exactly like the source are prefixed with the `$` character so that
 they are easily identifiable (eg: `$map`, `$array`, `$get`, `$put`, etc...)
 
+
+
+
 ## Arrays
 
 In ST-JS the JavaScript `Array` type is mapped to the
@@ -100,36 +103,36 @@ All the methods not shown in the snippet above can be called in exactly the same
 ST-JS also bundles a full JavaDoc of the `Array` API. If your IDE is setup correctly
 you should be able to automatically see the documentation for each method right as you type it.
 
-* *[1]* No differences between Java and JavaScript.
+* **[1]** No differences between Java and JavaScript.
 
-* *[2]* No differences between Java and JavaScript. The `Array` method is a static
+* **[2]** No differences between Java and JavaScript. The `Array` method is a static
 member of the `org.stjs.javascript.JSGlobal` class.
 
-* *[3]* `$array()` is a static function declared in the class
+* **[3]** `$array()` is a static function declared in the class
 `org.stjs.javascript.JSCollections`. ST-JS cannot use native Java array literals
 because they yield the wrong data type (`SomeType[]` instead of
 `Array&lt;Sometype&gt;`.
 
-* *[4],[5]* The java native arrays are native types that don't define any methods, and are therefore not suitable to
+* **[4],[5]** The java native arrays are native types that don't define any methods, and are therefore not suitable to
 mirror the very rich JavaScript arrays. Unfortunately, the `[]` notation can
 ony be used with native arrays in Java. The `$get()` method is the ST-JS way of
 working around this impedance mismatch between two languages.
 
-* *[6],[7]* In JavaScript arrays, setting the length property of arrays may have side-effects like truncating the
+* **[6],[7]** In JavaScript arrays, setting the length property of arrays may have side-effects like truncating the
 array. In Java, it is unfortunately impossible to apply side effects when a field is set directly. It is
 however possible to do so if the field is set through an accessor method instead of directly. One of the goals
 of ST-JS was to be able to run short snippets of client-side code directly on the server in order to avoid code
 duplication. The `$length()` methods are the ST-JS way of meeting all of these
 constraints at the same time.
 
-* *[8]* The Java form of the for-in loop makes one of the quirks of JavaScript very apparent: The for-in loop on
+* **[8]** The Java form of the for-in loop makes one of the quirks of JavaScript very apparent: The for-in loop on
 arrays iterates on the indices rather than on the values, it returns all the indices as Strings, and it also
 includes all enumerable prototype properties in the iteration. While this behavior makes sense when considering
 arrays as Objects in JavaScript, it is pretty confusing and unexpected. ST-JS solves this problem by making it
 clear that the iteration type are Strings, and by making sure that the iteration only happens on array indices
 and not on any other prototype properties.
 
-* *[9]* In Java 8 the `Iterable` interface which is implemented by the
+* **[9]** In Java 8 the `Iterable` interface which is implemented by the
 `Array` class introduced a new method with a default implementation:
 `forEach`. Unfortunately, the `Array` already
 contained a `forEach` method since its very first version, back before Java 8
@@ -193,17 +196,30 @@ for(var key in map){
 </div>
 <div class="clear"></div>
 
-* *[1]* `$map()` is a static function declared in the class
+* **[1]** `$map()` is a static function declared in the class
 `org.stjs.javascript.JSCollections`. Just like in Javascript,
 you can only use string literals as keys. Attempting to use anything else results in a compile
 time error. Values however may be any kind of expression.
 
-* *[2], [3], [4]* Unfortunately, the `[]` notation can ony be used with native arrays
+* **[2], [3], [4]** Unfortunately, the `[]` notation can ony be used with native arrays
 in Java. On top of that, the JavaScript `$delete()` keyword has no equivalent at
 all in Java. The `$get()` and `$put()` methods is
 the ST-JS way of working around this impedance mismatch between two languages.
 
-* *[5]* No differences between Java and JavaScript
+* **[5]** No differences between Java and JavaScript
+
+
+
+
+## Java Collections
+
+As you might remember from the introduction when you write Java code with ST-JS, you use the JavaScript API and not the
+Java API. One of the major differences between the two languages is that the wonderful Java collections API is cannot be
+used in ST-JS.
+
+For now, we have decided against supporting these collections directly, because they are a very typical Java
+idiosyncrasy. Using them in some JavaScript code would be awkward and doesn't fit the philosophy of ST-JS.
+
 
 
 
@@ -242,16 +258,17 @@ myvar = undefined
 </div>
 <div class="clear"></div>
 
-* *[1]* No differences between Java and JavaScript. Just like in JavaScript, it makes to sense to write
+* **[1]** No differences between Java and JavaScript. Just like in JavaScript, it makes to sense to write
 `myvar == undefined` since nothing is equal to
 `undefined`, including `undefined` itself.
 
-* *[2]* Almost no differences between Java and JavaScript. The only difference is the placement of the parenthesis.
+* **[2]** Almost no differences between Java and JavaScript. The only difference is the placement of the parenthesis.
 The `typeof` function is a static member of the
 `org.stjs.javascript.JSGlobal` class.
 
-* *[3]* No differences between Java and JavaScript. The `undefined` value is a static
+* **[3]** No differences between Java and JavaScript. The `undefined` value is a static
 member of the `org.stjs.javascript.JSGlobal` class.
+
 
 
 
@@ -272,6 +289,7 @@ guarantees that `===` and `==` are equivalent in the
 vast majority of cases. There are a few cases where they aren't (such as when the ST-JS code is being called
 incorrectly by external JavaScript code), but we have decided to let the users handle those rare cases manually to
 gain in clarity in the majority of common cases.
+
 
 
 
@@ -332,19 +350,19 @@ MyType
 </div>
 <div class="clear"></div>
 
-* *[1],[2]* The `$get()` and `$set()` methods are
+* **[1],[2]** The `$get()` and `$set()` methods are
 static members of the `org.stjs.javascript.JSObjectAdapter` class. They work
 in exactly the same way as their `Map` equivalent, but operate on any object.
 
-* *[3]* The `$properties()` method is a static member of the
+* **[3]** The `$properties()` method is a static member of the
 `org.stjs.javascript.JSObjectAdapter` class. It basically just casts any object
 to a generic STJS `Map&lt;String, Object&gt;` from which you can read properties
 using the `Map` API.
 
-* *[4]* The `$prototype()` method is a static member of the
+* **[4]** The `$prototype()` method is a static member of the
 `org.stjs.javascript.JSObjectAdapter` class.
 
-* *[5]* The `$constructor()` method is a static member of the
+* **[5]** The `$constructor()` method is a static member of the
 `org.stjs.javascript.JSObjectAdapter` class.
 `$constructor()`, `getClass()` and class literals
 are equivalent in terms of what value is actually returned in JavaScript, but only
@@ -352,6 +370,7 @@ are equivalent in terms of what value is actually returned in JavaScript, but on
 to use the class literal or`getClass()` method to better convey intent in your
 code, but if you do so please keep in mind that `java.lang.Class` is not currently
 mapped my ST-JS and that any methods you call on this class will fail at runtime.
+
 
 
 
@@ -381,6 +400,8 @@ val1 || val2 || val3
 
 The `$or()` method is a static member of the
 `org.stjs.javascript.JSObjectAdapter` class.
+
+
 
 
 ## Handling un-translatable cases

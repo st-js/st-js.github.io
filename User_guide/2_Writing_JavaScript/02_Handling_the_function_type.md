@@ -163,17 +163,17 @@ var handler4 =
 </div>
 <div class="clear"></div>
 
-* *[1], [2]* both of those method references properly support polymorphism. That is the correct, potentially
+* **[1], [2]** both of those method references properly support polymorphism. That is the correct, potentially
 overridden method will be called event if the runtime type of the bound object is a subtype of its compile time
 type.
 
-* *[1], [2], [4]* A new instance of the function is created each time these types of method references are used.
+* **[1], [2], [4]** A new instance of the function is created each time these types of method references are used.
 This can be problem for code relying on the identity of the function instance, like for example event listeners
 that can be added and removed. If you need to get the exact same instance of a function and still use method
 references, you need to store the reference to the function object in a field or variable and use that variable
 instead of the method reference directly.
 
-* *[3]* On the other hand, static method references always point to the exact instance of the method and
+* **[3]** On the other hand, static method references always point to the exact instance of the method and
 polymorphism
 isn't supported since static methods are not really inherited in Java.
 
@@ -232,6 +232,8 @@ Something = function(event){
 {% endhighlight %}
 </div>
 <div class="clear"></div>
+
+
 
 ## Using anonymous classes as functions
 
