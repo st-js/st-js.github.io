@@ -67,7 +67,7 @@ body {
 }
 
 .content .menu li {
-	padding-top: 10px;
+	padding-top: 1em;
 }
 
 .content .menu a,
@@ -167,17 +167,26 @@ body {
 	color: #10C500;
 }
 
-h4 {
+h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
-	font-size: 1.2em;
 	color: #10C500;
 	margin-top: 20px;
 }
 
-h5 {
-	font-weight: bold;
-	color: #10C500;
-	margin-top: 20px;
+h1 {
+	font-size: 2.5em;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.4em;
+}
+
+h4 {
+	font-size: 1.2em;
 }
 
 .grid_10 ul{

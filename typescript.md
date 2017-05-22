@@ -1,0 +1,142 @@
+---
+layout: default
+title: Moving from ST-JS to TypeScript
+---
+
+As you might have noticed, ST-JS is not very actively maintained, the reason is that we are moving to TypeScript.
+
+ST-JS was created before TypeScript even existed, and for a long time was in advance compared to TypeScript. This is no longer true today, the community around TypeScript is really huge, the number of Typings (TypeScript's bridges equivalent) is really enormous. Which makes our effort redundant to Microsoft's effort.
+
+Converting an application from ST-JS to TypeScript is not a particularly complex task but requires to be very concentrated on the whole process.
+
+{:toc}
+
+## Types
+
+In TypeScript, types are on the right of the statement and are optional.
+
+It's recommended to type at least your public interfaces. The rest can be done by inference a lot.
+
+
+```java
+class Test {
+     
+    String name;
+    Int count;
+ 
+    String print(String whoami) {
+        name = whoami;
+    }
+}
+```
+
+Would give you this in TypeScript:
+
+```typescript
+class Test {
+    name: string; // Primitives are lowercase
+    count: number; // Int/Double don't exist in JS, everything is "number"
+ 
+    print(whoami: string): string {
+        this.name = whoami; // "this." is mandatory, it can't  be inferred
+    }
+}
+```
+
+## Import / Export
+
+Imports and exports in Java are done in only one way, in TypeScript, the EcmaScript 2015+ Spec is used, which is much more flexible.
+
+If you're not familiar with ES2015 imports, I recommend you [read more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) on the subject.
+
+```java
+import com.swissquote.foundation.SomeClass;
+
+class Test {
+ 
+}
+```
+
+```typescript
+import SomeClass from "./SomeClass"; // Default import
+import {someFunction, someConstant} from "./utils"; // named imports
+
+export default class Test {
+ 
+}
+```
+
+## Array / Maps
+
+Arrays and maps, because they have special constructors and Types for Java, need to be completely modified for TypeScript
+
+These map and array in ST-JS :
+
+```java
+Array<String> test= $array("some", "item", "list")
+
+Map<String, Int> test = $map("key", 2, "other", 3)
+test.$put("foo", 4)
+```
+
+Are converted to this in TypeScript:
+
+```typescript
+let test: string[] = ["some", "item", "list"]
+
+let test: {[key: string]: number} = {key: 2, other: 3}
+test.foo = 4;
+```
+
+## Synthetic Types
+
+Synthetic types are types that have a format, but are not actual classes on the client-side, TypeScript has multiple ways of representing them, `interface` is one of them.
+
+This is a Synthetic Type in ST-JS:
+
+```java
+@SyntheticType
+class MyNonGeneratedType {
+    String firstName;
+    String lastName;
+    Int age;
+}
+ 
+MyNonGeneratedType test = new MyNonGeneratedType() {
+    {
+        firstName = "Stéphane";
+        lastName = "Goetz";
+        age = 27;
+    }
+}
+```
+
+And in TypeScript:
+
+```typescript
+interface MyNonGeneratedType {
+    firstName: string;
+    lastName: string;
+    age: number;
+}
+ 
+let test: MyNonGeneratedType = {
+    firstName: "Stéphane",
+    lastName: "Goetz",
+    age: 27
+}
+```
+
+## Object Type
+
+In TypeScript there is an `object` type but it doesn't represent the same as Java's `Object`
+
+In TypeScript `object` represents everything that isn't `number`, `string`, `boolean`, `symbol`, `null`, or `undefined`.
+
+To get the same effect as java's `Object` you have to use the `any` type
+
+However it's not recommended to use `any`, you might prefer to use combined types or even generics.
+
+## Conclusion
+
+Armed with these tips and tricks, you should be able to convert a codebase of any size from ST-JS to TypeScript 
