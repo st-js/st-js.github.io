@@ -11,7 +11,52 @@ Converting an application from ST-JS to TypeScript is not a particularly complex
 
 {:toc}
 
-## Types
+__Table of contents__
+<ul>
+    <li><a href="#deciding-on-the-final-output">Deciding on the final output</a></li>
+    <li><a href="#webjar-or-npm-module-">Webjar or npm module ?</a></li>
+    <li><a href="#the-conversion">The conversion</a>
+        <ul>
+            <li><a href="#types">Types</a></li>
+            <li><a href="#import--export">Import / Export</a></li>
+            <li><a href="#array--maps">Array / Maps</a></li>
+            <li><a href="#synthetic-types">Synthetic Types</a></li>
+            <li><a href="#object-type">Object Type</a></li>
+        </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+## Deciding on the final output
+
+ST-JS has only one output way; defining classes in the global scope.
+
+In TypeScript, by default you don't define a single variable in the global scope.
+
+So you have to decide if you wish to adopt EcmaScript/TypeScript's way of defining bundles or keeping global definitions. Here's a quick comparison to help you decide.
+
+__EcmaScript2015+ / TypeScript modules pros and cons__
+
+- _Pro_: your internal classes don't pollute your global scope and don't collision with other classes that might have been defined somewhere else
+- _Pro_: your final bundle will be smaller, because all internal classes can be compressed and names can be minified.
+- _Con_: it's mandatory to convert all classes in one go. (It might be needed anyway, depending on how your types are linked to each other)
+
+__Global definitions pros and cons__
+
+- _Pro_: In some limited cases, you might be able to gradually move to TypeScript while keeping the rest of your app in ST-JS
+- _Con_: Typings for global definitions are really horrible to work with.
+
+## Webjar or npm module ?
+
+ST-JS' preferred way of distribution is webjars. But TypeScript is better off with NPM modules.
+
+While it's possible to distribute an TypeScript project as a webjar, it's very complicated to re-use it in an other project (especially typings) when it's a webjar.
+
+The best solution is to create an npm module first and offer a webjar as well.
+
+## The conversion
+
+### Types
 
 In TypeScript, types are on the right of the statement and are optional.
 
@@ -20,7 +65,6 @@ It's recommended to type at least your public interfaces. The rest can be done b
 
 ```java
 class Test {
-     
     String name;
     Int count;
  
@@ -34,7 +78,7 @@ Would give you this in TypeScript:
 
 ```typescript
 class Test {
-    name: string; // Primitives are lowercase
+    name: string;  // Primitives are lowercase
     count: number; // Int/Double don't exist in JS, everything is "number"
  
     print(whoami: string): string {
@@ -43,7 +87,7 @@ class Test {
 }
 ```
 
-## Import / Export
+### Import / Export
 
 Imports and exports in Java are done in only one way, in TypeScript, the EcmaScript 2015+ Spec is used, which is much more flexible.
 
@@ -66,7 +110,7 @@ export default class Test {
 }
 ```
 
-## Array / Maps
+### Array / Maps
 
 Arrays and maps, because they have special constructors and Types for Java, need to be completely modified for TypeScript
 
@@ -88,7 +132,7 @@ let test: {[key: string]: number} = {key: 2, other: 3}
 test.foo = 4;
 ```
 
-## Synthetic Types
+### Synthetic Types
 
 Synthetic types are types that have a format, but are not actual classes on the client-side, TypeScript has multiple ways of representing them, `interface` is one of them.
 
@@ -127,7 +171,7 @@ let test: MyNonGeneratedType = {
 }
 ```
 
-## Object Type
+### Object Type
 
 In TypeScript there is an `object` type but it doesn't represent the same as Java's `Object`
 
