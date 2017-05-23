@@ -20,6 +20,7 @@ __Table of contents__
             <li><a href="#types">Types</a></li>
             <li><a href="#import--export">Import / Export</a></li>
             <li><a href="#array--maps">Array / Maps</a></li>
+            <li><a href="#callbacks">Callbacks</a></li>
             <li><a href="#synthetic-types">Synthetic Types</a></li>
             <li><a href="#object-type">Object Type</a></li>
         </ul>
@@ -130,6 +131,31 @@ let test: string[] = ["some", "item", "list"]
 
 let test: {[key: string]: number} = {key: 2, other: 3}
 test.foo = 4;
+```
+
+### Callbacks
+
+Callbacks are not very common in Java and are quite cumbersome to implement and use in ST-JS.
+On the other hand it's very common in TypeScript and very easy to use.
+
+```java
+interface MyType {
+    Callback2<Event, Int> onClick;
+}
+
+MyType instance;
+instance.onClick.$invoke(new Event(), 2);
+```
+
+And the same in TypeScript
+
+```typescript
+interface MyType {
+    onClick: (event: Event, count: number): void ;
+}
+
+let instance: MyType;
+instance.onClick(new Event(), 2);
 ```
 
 ### Synthetic Types
